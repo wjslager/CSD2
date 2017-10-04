@@ -1,10 +1,13 @@
 # TODO
-# - Triggering the samples with a class
 # - Option to input each list at booting the program
-# - Make a sample playing class allowing more sounds to be used without copy-pasting code
+# - Add variation over time: list manipulation
+#       if interval has passed else wait a ~10ms
+# - check all files ending with *.wav -> laad deze
 
 # ISSUES
+# - Glitches when BPM < 120
 # - Samples are cutoff when a new sample is triggered (clicky)
+# - Beat sometimes lags a bit
 
 import simpleaudio as sa
 import time
@@ -25,19 +28,15 @@ class samplePlayer:
             
         elif trig == 2:
             if random.randint(0, 1) == 1:
-                # Random trigger
+                # Random trigger (doesn't always trigger)
                 playObj = samples[self.sampleIndex].play()
 
-
-print(" / / / / simpleSampler / / / / ")
+print("\n / / / / simpleSampler / / / / \n ")
 
 # Drumkit selection
 validKit = False
-print("1: Tape")
-print("2: 808")
-print("3: 909")
-print("4: DMX")
-inputKit = input("Drumkit: ")
+print("1: Tape \n2: 808 \n3: 909 \n4: DMX")
+inputKit = input("Choose a drumkit: ")
 
 # Check if drumkit input is valid and try again if needed
 while validKit == False:
@@ -48,7 +47,7 @@ while validKit == False:
     else:
         # Ask for input
         print(" Drumkit must be an integer smaller than 5")
-        inputKit = input("Drumkit: ")
+        inputKit = input("Choose a drumkit: ")
 
 # Load the chosen drumkit
 sample0 = sa.WaveObject.from_wave_file("kik" + str(drumkit) + ".wav")
@@ -64,20 +63,16 @@ for i in range(len(samples)):
     players.append(samplePlayer(i))
 
 # Sequence of drumtriggers
-seq0 = [1, 0, 0, 0, 1, 1, 2, 0]
-seq1 = [0, 0, 1, 0, 0, 0, 2, 1]
+seq0 = [1, 0, 0, 0, 2, 1, 0, 0]
+seq1 = [0, 0, 1, 0, 0, 0, 1, 0]
 seq2 = [1, 1, 1, 1, 1, 1, 1, 1]
-seq3 = [0, 1, 0, 1, 0, 1, 0, 1]
+seq3 = [0, 0, 0, 0, 0, 0, 0, 0]
 
 sequences = [seq0, seq1, seq2, seq3]
 
-# Grid
-trigCount = 0 
-trigsPerBeat = 2
-
 # Set the BPM
 validBPM = False
-inputBPM = input("BPM: ")
+inputBPM = input("Choose a BPM: ")
 
 # Check if BPM input is valid and try again if needed
 while validBPM == False:
@@ -89,13 +84,31 @@ while validBPM == False:
     else:
         # Ask for input
         print(" BPM must be an integer.")
-        inputBPM = input("BPM: ")
-    
-while playback == True :    
-    # Send a trigger to each player with the triggers from the corresponding sequence
-    for i in range(len(samples)):
-        players[i].playSample(sequences[i][trigCount%8])
+        inputBPM = input("Choose a BPM: ")
 
-    # Wait for the next trigger
-    time.sleep(60/bpm/trigsPerBeat)
-    trigCount += 1
+# Calculate timing values
+trigCount = 0    # initial trigger
+trigsPerBeat = 2 # triggers per quarter note
+triggerLength = 60/bpm/trigsPerBeat
+print("Duration of a single trigger:",triggerLength)
+time.sleep(60/bpm/trigsPerBeat)
+
+print("______  ___  ______     _____ ___    ___    _____   __")
+print("| ___ \/ _ \ | ___ \   |_   _/ _ \  / _ \  / _ \ \ / /")
+print("| |_/ / /_\ \| |_/ /_____| |/ /_\ \/ /_\ \/ /_\ \ V / ")
+print("|  __/|  _  ||    /______| ||  _  ||  _  ||  _  |\ /  ")
+print("| |   | | | || |\ \      | || | | || | | || | | || |  ")
+print("\_|   \_| |_/\_| \_|     \_/\_| |_/\_| |_/\_| |_/\_/  ")
+
+# Play the beat
+t0 = time.time()
+
+while playback == True:
+    if time.time() - t0 >= triggerLength:    
+        # Send a trigger to each player with the triggers from the corresponding sequence
+        for i in range(len(samples)):
+            players[i].playSample(sequences[i][trigCount%8])
+        
+        t0 = time.time()
+        trigCount += 1
+        # print("beat:", trigCount)
