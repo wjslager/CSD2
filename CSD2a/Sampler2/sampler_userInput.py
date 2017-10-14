@@ -2,6 +2,10 @@ import simpleaudio as sa
 import time
 import random
 
+# TODO
+# - Ask about event and events. Is this from python itself or just variables?
+# - Remove duplicate code
+
 """
 An example project in which a sequence (one measure, multiple samples) is played.
   - Sixteenth note is the smallest used note duration.
@@ -60,6 +64,7 @@ sequence3 = [9, 13]
 
 #transform the sixteenthNoteSequece to an eventlist with time values
 for sixteenNoteIndex in sequence1:
+  #add the event time and sample number to the event list
   events.append([sixteenNoteIndex * sixteenthNoteDuration, 0])
 
 #transform the sixteenthNoteSequece to an eventlist with time values
@@ -71,7 +76,7 @@ for sixteenNoteIndex in sequence3:
   events.append([sixteenNoteIndex * sixteenthNoteDuration, 2])
 
 #NOTE: The line below is essential to enable a correct playback of the events
-#events.sort()
+events.sort()
 
 #display the event list
 print(events)

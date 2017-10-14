@@ -50,10 +50,10 @@ while validKit == False:
         inputKit = input("Choose a drumkit: ")
 
 # Load the chosen drumkit
-sample0 = sa.WaveObject.from_wave_file("kik" + str(drumkit) + ".wav")
-sample1 = sa.WaveObject.from_wave_file("snr" + str(drumkit) + ".wav")
-sample2 = sa.WaveObject.from_wave_file("hhc" + str(drumkit) + ".wav")
-sample3 = sa.WaveObject.from_wave_file("per" + str(drumkit) + ".wav")
+sample0 = sa.WaveObject.from_wave_file("../audio/kik" + str(drumkit) + ".wav")
+sample1 = sa.WaveObject.from_wave_file("../audio/snr" + str(drumkit) + ".wav")
+sample2 = sa.WaveObject.from_wave_file("../audio/hhc" + str(drumkit) + ".wav")
+sample3 = sa.WaveObject.from_wave_file("../audio/per" + str(drumkit) + ".wav")
 
 samples = [sample0, sample1, sample2, sample3]
 
@@ -63,10 +63,10 @@ for i in range(len(samples)):
     players.append(samplePlayer(i))
 
 # Sequence of drumtriggers
-seq0 = [1, 0, 0, 0, 2, 1, 0, 0]
+seq0 = [1, 2, 0, 0, 2, 1, 0, 0]
 seq1 = [0, 0, 1, 0, 0, 0, 1, 0]
 seq2 = [1, 1, 1, 1, 1, 1, 1, 1]
-seq3 = [0, 0, 0, 0, 0, 0, 0, 0]
+seq3 = [0, 2, 0, 2, 2, 1, 2, 2]
 
 sequences = [seq0, seq1, seq2, seq3]
 
@@ -91,14 +91,7 @@ trigCount = 0    # initial trigger
 trigsPerBeat = 2 # triggers per quarter note
 triggerLength = 60/bpm/trigsPerBeat
 print("Duration of a single trigger:",triggerLength)
-time.sleep(60/bpm/trigsPerBeat)
-
-print("______  ___  ______     _____ ___    ___    _____   __")
-print("| ___ \/ _ \ | ___ \   |_   _/ _ \  / _ \  / _ \ \ / /")
-print("| |_/ / /_\ \| |_/ /_____| |/ /_\ \/ /_\ \/ /_\ \ V / ")
-print("|  __/|  _  ||    /______| ||  _  ||  _  ||  _  |\ /  ")
-print("| |   | | | || |\ \      | || | | || | | || | | || |  ")
-print("\_|   \_| |_/\_| \_|     \_/\_| |_/\_| |_/\_| |_/\_/  ")
+#time.sleep(60/bpm/trigsPerBeat)
 
 # Play the beat
 t0 = time.time()
@@ -108,7 +101,8 @@ while playback == True:
         # Send a trigger to each player with the triggers from the corresponding sequence
         for i in range(len(samples)):
             players[i].playSample(sequences[i][trigCount%8])
-        
+
         t0 = time.time()
         trigCount += 1
-        # print("beat:", trigCount)
+#    else:
+#        time.sleep(0.001)
