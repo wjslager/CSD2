@@ -25,3 +25,4 @@ randomness hanteert, zodat de resulterende beats elke keer anders zijn.
 
 ## Issues
 - Clicks when samples are retriggered
+- Timing inbetween triggers is sloppy

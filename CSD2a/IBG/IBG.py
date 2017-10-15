@@ -6,6 +6,7 @@
 
 # ISSUES
 # - Clicks when samples are retriggered
+# - Timing inbetween triggers is sloppy
 
 
 import simpleaudio as sa
@@ -36,35 +37,34 @@ def initPlayback(bpm):
     global playbackStart, trigCount, triggerLength
     
     trigCount = 0
-    trigsPerBeat = 2
+    trigsPerBeat = 4
     triggerLength = 60/bpm/trigsPerBeat
-    print(" Initializing playback \n - A single trigger takes", triggerLength, "seconds \n -", trigsPerBeat, "triggers per quarter note")
+    print(" Initializing playback \n - A single trigger takes", int(1000*triggerLength), "ms\n -", trigsPerBeat, "triggers per quarter note")
 
     playbackStart = time.time()
 
 # Drumkit selection
 validKit = False
-print("1: Tape \n2: 808 \n3: 909 \n4: DMX")
+print("1: Synthetic \n2: n/a \n3: n/a")
 inputKit = input("Choose a drumkit: ")
 
 # Check if drumkit input is valid and try again if needed
 while validKit == False:
-    if inputKit.isdigit() and int(inputKit) < 5:
+    if inputKit.isdigit() and int(inputKit) < 4:
         # Set Kit, exit loop
         drumkit = int(inputKit)
         validKit = True
     else:
-        # Ask for input
+        # Try again
         print(" Drumkit must be an integer smaller than 5")
         inputKit = input("Choose a drumkit: ")
 
 # Load the chosen drumkit
-sample0 = sa.WaveObject.from_wave_file("../audio/kik" + str(drumkit) + ".wav")
-sample1 = sa.WaveObject.from_wave_file("../audio/snr" + str(drumkit) + ".wav")
-sample2 = sa.WaveObject.from_wave_file("../audio/hhc" + str(drumkit) + ".wav")
-sample3 = sa.WaveObject.from_wave_file("../audio/per" + str(drumkit) + ".wav")
+sample0 = sa.WaveObject.from_wave_file("kik" + str(drumkit-1) + ".wav")
+sample1 = sa.WaveObject.from_wave_file("snr" + str(drumkit-1) + ".wav")
+sample2 = sa.WaveObject.from_wave_file("hhc" + str(drumkit-1) + ".wav")
 
-samples = [sample0, sample1, sample2, sample3]
+samples = [sample0, sample1, sample2]
 
 # Load a samplePlayer for each sample
 sounds = []
@@ -72,12 +72,11 @@ for i in range(len(samples)):
     sounds.append(samplePlayer(i))
 
 # Sequence of drumtriggers
-seq0 = [1, 0, 0, 0, 0, 1, 0, 0]
-seq1 = [0, 0, 1, 0, 0, 0, 1, 0]
-seq2 = [1, 1, 1, 1, 1, 1, 1, 1]
-seq3 = [0, 0, 0, 0, 0, 0, 0, 0]
+seq0 = [1, 0, 0, 0, 1, 0, 0, 0]
+seq1 = [0, 0, 0, 0, 1, 0, 0, 0]
+seq2 = [0, 2, 1, 2, 0, 2, 1, 2]
 
-sequences = [seq0, seq1, seq2, seq3]
+sequences = [seq0, seq1, seq2]
 
 # Set the BPM
 validBPM = False
@@ -91,31 +90,34 @@ while validBPM == False:
         validBPM = True
         playback = True
     else:
-        # Ask for input
+        # Try again
         print(" BPM must be an integer.")
         inputBPM = input("Choose a BPM: ")
 
 
 initPlayback(bpm)
 
+# Save time used for checking timing inbetween notes
+timing = time.time()
+
 while True:
     
     while playback == True:
 
         # Calculates at which exact time the next event should play
-        playbackTime = playbackStart + trigCount * triggerLength
+        nextTriggerTime = playbackStart + trigCount * triggerLength
 
-        if time.time() >= playbackTime:
+        if time.time() >= nextTriggerTime:
             # Send a trigger to each player with the triggers from the corresponding sequence
             for i in range(len(samples)):
                 sounds[i].playSample(sequences[i][trigCount%8])
 
             trigCount += 1
-            print(trigCount)
 
+            # Only used for checking timing, not required for playback
+            print(trigCount, int(1000*(time.time()-timing)), "ms")
+            timing = time.time()
+            
         else:
+            # Wait 10ms before checking again
             time.sleep(0.01)
-
-
-
-
