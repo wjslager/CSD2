@@ -46,15 +46,11 @@ def initPlayback(bpm):
 
 # Functions which validates input values
 def checkInput(low, high):
-    global checkedInput
-    validInput = False
     inputValue = input("> ")
     
-    while validInput == False:
+    while True:
         if inputValue.isdigit() and int(inputValue) >= low and int(inputValue) <= high:
-            # Store value and exit loop
-            checkedInput = int(inputValue)
-            validInput = True
+            return int(inputValue)
         else:
             # Try again
             print("Invalid input. Must be an integer ranging from", low, "to", high)
@@ -71,8 +67,9 @@ def checkInput(low, high):
 
 # Drumkit selection
 print("Available drumkits: \n 0: Synthetic \nChoose a drumkit: ")
-checkInput(0, 0)
-drumkit = checkedInput
+drumkit = checkInput(0, 0)
+
+print(drumkit)
 
 # Load the chosen drumkit
 sample0 = sa.WaveObject.from_wave_file("kik" + str(drumkit).zfill(3) + ".wav")
@@ -97,8 +94,7 @@ seq2 = [0, 1, 1, 1, 0, 1, 1, 1]
 sequences = [seq0, seq1, seq2]
 
 print("Choose a BPM: ")
-checkInput(50, 200)
-bpm = checkedInput
+bpm = checkInput(50, 200)
 
 # = == === ==== ===== ====== # Playback Loop # ====== ===== ==== === == = #
 
