@@ -10,6 +10,9 @@
 import simpleaudio as sa
 import time
 import random
+import _thread
+import sys
+from sys import stdin
 
 # = == === ===== ======  # Classes and functions # ====== ===== ==== === == = #
 
@@ -55,6 +58,30 @@ def checkInput(low, high):
             # Try again
             print("Invalid input. Must be an integer ranging from", low, "to", high)
             inputValue = input("> ")
+
+# Thread which plays the sequences    
+def playbackThread():
+    global playbackStart, trigCount, triggerLength, timing
+    
+    while True:
+        while playback == True:
+            # Calculates at which exact time the next event should play
+            nextTriggerTime = playbackStart + trigCount * triggerLength
+
+            if time.time() >= nextTriggerTime:
+                # Send a trigger to each player with the triggers from the corresponding sequence
+                for i in range(len(samples)):
+                    sounds[i].playSample(sequences[i][trigCount%8])
+
+                trigCount += 1
+
+                # Only used for checking timing, not required for playback
+                #print(trigCount, int(1000*(time.time()-timing)), "ms")
+                timing = time.time()
+                
+            else:
+                # Wait 10ms before checking again
+                time.sleep(0.01)
 
 # = == === ==== ===== ====== # Playback preparations # ====== ===== ==== === == = #
 
@@ -104,22 +131,16 @@ timing = time.time()
 # Calculates the length of triggers
 initPlayback(bpm)
 
+try:
+   _thread.start_new_thread(playbackThread, ())
+except:
+   print("Error: unable to start thread")
+
 while True:
-    while playback == True:
-        # Calculates at which exact time the next event should play
-        nextTriggerTime = playbackStart + trigCount * triggerLength
+  userInput = sys.stdin.read(1)
+  if userInput == 'q':
+    print("User typed q. Leaving program.")
+    sys.exit()
+  time.sleep(0.1)
 
-        if time.time() >= nextTriggerTime:
-            # Send a trigger to each player with the triggers from the corresponding sequence
-            for i in range(len(samples)):
-                sounds[i].playSample(sequences[i][trigCount%8])
 
-            trigCount += 1
-
-            # Only used for checking timing, not required for playback
-            print(trigCount, int(1000*(time.time()-timing)), "ms")
-            timing = time.time()
-            
-        else:
-            # Wait 10ms before checking again
-            time.sleep(0.01)
