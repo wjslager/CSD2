@@ -19,10 +19,16 @@ maatsoort (logische ritmische onderverdeling v. low, mid, high) en daarnaast een
 randomness hanteert, zodat de resulterende beats elke keer anders zijn.
 
 ## Todo
-- Option to input each list at booting the program (or load from disk)
 - Add variation over time: list manipulation
+- Clean up the code: 
+ - Move functions to seperate *.py files
+ - Check for duplicate code?
+
+### Extra
 - Check all files ending with *.wav and load them
+- Option to input each list at booting the program (or load from disk)
 
 ## Issues
 - Clicks when samples are retriggered
 - Timing inbetween triggers is sloppy
+- Playback thread keeps running when calling sys.exit() (only an issue when executing the program using IDLE)
