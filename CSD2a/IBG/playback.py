@@ -5,9 +5,9 @@ import simpleaudio as sa
 def loadSample():
     global samples, sounds, sequences, seq0, seq1, seq2
 
-    sample0 = sa.WaveObject.from_wave_file('kik' + str(drumkit).zfill(3) + '.wav')
-    sample1 = sa.WaveObject.from_wave_file('snr' + str(drumkit).zfill(3) + '.wav')
-    sample2 = sa.WaveObject.from_wave_file('hhc' + str(drumkit).zfill(3) + '.wav')
+    sample0 = sa.WaveObject.from_wave_file("kik" + str(drumkit).zfill(3) + ".wav")
+    sample1 = sa.WaveObject.from_wave_file("snr" + str(drumkit).zfill(3) + ".wav")
+    sample2 = sa.WaveObject.from_wave_file("hhc" + str(drumkit).zfill(3) + ".wav")
 
     samples = [sample0, sample1, sample2]
 
@@ -15,8 +15,6 @@ def loadSample():
     sounds = []
     for i in range(3):
         sounds.append(samplePlayer(i))
-
-    print(sounds)
 
     # Sequence of drumtriggers
     # 0 no trigger
@@ -50,7 +48,7 @@ class samplePlayer:
 
         elif trig == 2:
             if random.randint(0, 1) == 1:
-                # Random trigger (doesn't always trigger)
+                # Random trigger (doesn"t always trigger)
                 samples[self.sampleIndex].play()
 
 # Function which initializes all variables needed for playback
@@ -63,7 +61,7 @@ def initPlayback(bpm, printInfo=False):
 
     # Only prints info if specifically asked for
     if printInfo:
-        print('Initializing playback \n- A single trigger takes', int(1000*triggerLength), 'ms\n-', trigsPerBeat, 'triggers per quarter note\n')
+        print("Initializing playback \n- A single trigger takes", int(1000*triggerLength), "ms\n-", trigsPerBeat, "triggers per quarter note\n")
 
     playbackStart = time.time()
     playback = True
@@ -85,7 +83,7 @@ def playbackThread():
                 trigCount += 1
 
                 # Only used for checking timing, not required for playback
-                # print(trigCount, int(1000*(time.time()-timing)), 'ms')
+                # print(trigCount, int(1000*(time.time()-timing)), "ms")
                 timing = time.time()
 
             else:
