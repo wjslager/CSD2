@@ -20,12 +20,12 @@ randomness hanteert, zodat de resulterende beats elke keer anders zijn.
 
 ## Todo
 - Add variation over time: list manipulation
-- Clean up the code: 
- - Move functions to seperate *.py files
+- Clean up the code:
+ - Move functions to separate .py files
  - Check for duplicate code?
 
 ### Extra
-- Check all files ending with *.wav and load them
+- Check all files ending with .wav and load them
 - Option to input each list at booting the program (or load from disk)
 
 ## Issues
