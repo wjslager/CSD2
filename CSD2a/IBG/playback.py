@@ -1,13 +1,15 @@
 import time
 import simpleaudio as sa
 
+timingPrint = False
+
 # Function which loads the samples
 def loadSample():
     global samples, sounds, sequences, seq0, seq1, seq2
 
-    sample0 = sa.WaveObject.from_wave_file("kik" + str(drumkit).zfill(3) + ".wav")
-    sample1 = sa.WaveObject.from_wave_file("snr" + str(drumkit).zfill(3) + ".wav")
-    sample2 = sa.WaveObject.from_wave_file("hhc" + str(drumkit).zfill(3) + ".wav")
+    sample0 = sa.WaveObject.from_wave_file("audio/kik" + str(drumkit).zfill(3) + ".wav")
+    sample1 = sa.WaveObject.from_wave_file("audio/snr" + str(drumkit).zfill(3) + ".wav")
+    sample2 = sa.WaveObject.from_wave_file("audio/hhc" + str(drumkit).zfill(3) + ".wav")
 
     samples = [sample0, sample1, sample2]
 
@@ -53,13 +55,16 @@ class samplePlayer:
 
 # Function which initializes all variables needed for playback
 def initPlayback(bpm, printInfo=False):
-    global trigCount, trigsPerBeat, triggerLength, playbackStart, playback
+    global trigCount, trigsPerBeat, triggerLength, playbackStart, playback, timing
 
     trigCount = 0
     trigsPerBeat = 4
     triggerLength = 60/bpm/trigsPerBeat
 
-    # Only prints info if specifically asked for
+    # Save time used for checking timing inbetween notes, only used for debugging
+    timing = time.time()
+
+    # Only prints info if specifically asked for (i.e. when debugging)
     if printInfo:
         print("Initializing playback \n- A single trigger takes", int(1000*triggerLength), "ms\n-", trigsPerBeat, "triggers per quarter note\n")
 
@@ -68,8 +73,9 @@ def initPlayback(bpm, printInfo=False):
 
 # Thread which plays the sequences
 def playbackThread():
-    global playbackStart, trigCount, triggerLength, timing
+    global playbackStart, trigCount, triggerLength, timing, timingPrint
 
+    # This loop makes sure the thread doesn't stop even though playback can stop
     while True:
         while playback == True:
             # Calculates at which exact time the next event should play
@@ -83,8 +89,9 @@ def playbackThread():
                 trigCount += 1
 
                 # Only used for checking timing, not required for playback
-                # print(trigCount, int(1000*(time.time()-timing)), "ms")
-                timing = time.time()
+                if timingPrint:
+                    print(trigCount, int(1000*(time.time()-timing)), "ms")
+                    timing = time.time()
 
             else:
                 # Wait 10ms before checking again

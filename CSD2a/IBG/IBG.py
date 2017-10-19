@@ -1,12 +1,18 @@
+# Python modules
 import simpleaudio as sa
 import time
 import random
 import _thread
 import sys
+
+# Project modules
 import userInput as ui
 import playback as pb
+import beatGenerator as bgen
 
-# = == === ==== ===== # Playback preparations # ===== ==== === == = #
+ui.startupInfo()
+
+# = == === ==== ===== # Initialize values # ===== ==== === == = #
 
 # Drumkit selection
 print("Available drumkits: \n 0: Synthetic \nChoose a drumkit: \n")
@@ -15,16 +21,15 @@ pb.drumkit = ui.askInput(0, 0)
 # Load the chosen drumkit
 pb.loadSample()
 
+# Initial BPM selection.
+# BPM can be changed afterwards, but a value is needed to initialize playback
 print("Choose a BPM: \n")
 bpm = ui.askInput(50, 200)
 
-# = == === ==== ===== # Playback Loop # ===== ==== === == = #
-
-# Save time used for checking timing inbetween notes, only used for debugging
-timing = time.time()
-
 # Calculates the length of triggers and display info
 pb.initPlayback(bpm, True)
+
+# = == === ==== ===== # Playback Loop # ===== ==== === == = #
 
 # Start the playback thread
 try:
@@ -32,6 +37,7 @@ try:
 except:
    print("Error: unable to start thread \n")
 
+# Loop checking for user input
 while True:
     # Wait for keyboard input
     userInput = input("> ")
@@ -40,12 +46,12 @@ while True:
     userInput = userInput.split(" ", 1)
 
     # Exit program
-    if userInput[0].lower() == "exit" or userInput[0].lower() == "quit":
+    if userInput[0].lower() == "exit" or userInput[0].lower() == "quit" or userInput[0].lower() == "e":
         ui.exitProgram()
 
     # Settings
     elif userInput[0].lower() == "bpm":
-        bpm = ui.checkInput(userInput[1], 50, 200)
+        bpm = ui.checkInput(userInput[1], bpm, 50, 200)
 
     # Show help file
     elif userInput[0].lower() == "help":
