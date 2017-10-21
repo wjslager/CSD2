@@ -21,8 +21,8 @@ ui.titleText()
 # - Start playback
 
 # Drumkit selection
-print("Available drumkits: \n 0: Synthetic \n\nChoose a drumkit: (0-0)")
-pb.drumkit = ui.askInput(0, 0)
+print("Available drumkits: \n 0: Synthetic \n 1: Space \n\nChoose a drumkit: (0-1)")
+pb.drumkit = ui.askInput(0, 1)
 
 # Load all the samples of the drumkit
 pb.loadSamples()
@@ -92,8 +92,8 @@ while True:
 
     # Time signature
     elif userInput[0].lower() == "time" and len(userInput) > 1:
-        # If value is valid, stop playback to prevent issues
-        if 12 >= int(userInput[1]) >= 4:
+        # If value is valid: stop playback to prevent issues
+        if userInput[1].isdigit() and 12 >= int(userInput[1]) >= 4:
             pb.playback = False
             # bgen.generate(pb.timeBeats, pb.timeQuarter)
         pb.timeBeats = ui.checkInput(userInput[1], pb.timeBeats, 4, 12)
@@ -105,6 +105,19 @@ while True:
         pb.timeQuarter = ui.checkInput(userInput[1], pb.timeQuarter, 1, 4)
     elif userInput[0].lower() == "quarter":
         print(" ! Missing argument: \n  expecting quarter + value")
+
+    # Drumkit
+    elif userInput[0].lower() == "kit" and len(userInput) > 1:
+        pb.drumkit = ui.checkInput(userInput[1], pb.drumkit, 0, 1)
+        # If value is valid: load selected drumkit
+        if userInput[1].isdigit() and 1 >= int(userInput[1]) >= 0:
+            pb.loadSamples()
+    elif userInput[0].lower() == "kit":
+        print(" ! Missing argument: \n  expecting drumkit + value")
+
+
+
+
 
     # Show help file
     elif userInput[0].lower() == "help":

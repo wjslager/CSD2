@@ -37,9 +37,11 @@ def helpFile():
 
     print("{:14}{}".format("GEN", "(re)generates a beat\n"))
 
+    print("{:14}{}".format("", "The following commands only go into effect after restarting playback (and regeneration)"))
     print("{:10}{:4}{}".format("BPM", "$", "set BPM to $. (50-200)"))
     print("{:10}{:4}{}".format("TIME", "$", "set triggers per measure to $. (4-12)"))
-    print("{:10}{:4}{}".format("QUARTER", "$", "set trigggers per quarter note to $. (1-4)\n"))
+    print("{:10}{:4}{}".format("QUARTER", "$", "set triggers per quarter note to $. (1-4)\n"))
+    print("{:10}{:4}{}".format("KIT", "$", "set drumkit to $. (0-1)\n"))
 
     print("{:14}{}".format("HELP", "you already know what this does.."))
     print("{:7}{:7}{}".format("EXIT", "QUIT", "self-explanatory\n"))

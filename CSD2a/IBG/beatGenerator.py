@@ -47,7 +47,7 @@ def assignImportant(timeBeats):
         seq2.append(0)
 
     # Put a kick at 0 because reasons
-    # seq0[0] = 1
+    seq0[0] = 1
 
     # Convert beat values from relative to absolute
     # [2, 3, 2] = [0, 2, 5]
