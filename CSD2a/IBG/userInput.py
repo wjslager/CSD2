@@ -3,7 +3,8 @@ import time
 import os
 
 # Print startup overview
-def startupInfo():
+def titleText():
+    clearConsole()
     print("_ ____ ____ ____ ____ _  _ _    ____ ____    ___  ____ ____ ___    ____ ____ _  _ ____ ____ ____ ___ ____ ____ \n| |__/ |__/ |___ | __ |  | |    |__| |__/    |__] |___ |__|  |     | __ |___ |\ | |___ |__/ |__|  |  |  | |__/ \n| |  \ |  \ |___ |__] |__| |___ |  | |  \    |__] |___ |  |  |     |__] |___ | \| |___ |  \ |  |  |  |__| |  \ \n\n")
     print("_ _ _ ____ ____ ___     ____ _    ____ ____ ____ ____ \n| | | |__| |__/ |  \    [__  |    |__| | __ |___ |__/ \n|_|_| |  | |  \ |__/    ___] |___ |  | |__] |___ |  \ \n")
 
@@ -31,15 +32,17 @@ def checkInput(inputValue, currentBPM, low, high):
 # Print command overview
 def helpFile():
     print("Overview of all commands\n")
-    print("{:6}{:10}{}".format("BPM", "<value>", "Set new BPM to <value>. <value> must be an integer ranging from 50 to 200"))
-    print("{:16}{}".format("START", "Starts (or restarts) playback from the beginning"))
-    print("{:16}{}".format("STOP", "Stops playback\n"))
-    print("{:6}{:10}{}".format("EXIT", "QUIT", "Exits the program"))
-    print("{:16}{}".format("HELP", "You already know what this does..\n"))
+    print("{:6}{:10}{}".format("BPM", "<value>", "set new BPM to <value>. <value> must be an integer ranging from 50 to 200"))
+    print("{:16}{}".format("START", "(re)starts playback from the beginning"))
+    print("{:16}{}".format("STOP", "stops playback\n"))
+    print("{:16}{}".format("GEN", "(re)generates a beat\n"))
+    print("{:6}{:10}{}".format("EXIT", "QUIT", "self-explanatory"))
+    print("{:16}{}".format("HELP", "you already know what this does..\n"))
 
 # Exits the program and DESTROYS ALL THE EARTHLINGS!!
 def exitProgram():
     clearConsole()
+    titleText()
     ufo()
     sys.exit()
 

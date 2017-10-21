@@ -11,17 +11,17 @@ import playback as pb
 import beatGenerator as bgen
 
 # Display some nice things
-ui.startupInfo()
+ui.titleText()
 
 # = == === ==== ===== # Initialize values # ===== ==== === == = #
 
 # Initial settings selection.
 # Settings can be changed afterwards, but values are needed to:
 # - Load the samples
-# - initialize playback
+# - Start playback
 
 # Drumkit selection
-print("Available drumkits: \n 0: Synthetic \n\nChoose a drumkit:")
+print("Available drumkits: \n 0: Synthetic \n\nChoose a drumkit: (0-0)")
 pb.drumkit = ui.askInput(0, 0)
 
 # Load all the samples of the drumkit
@@ -31,18 +31,18 @@ pb.loadSamples()
 print("\nHow many triggers per measure? (4-12)")
 pb.timeBeats = ui.askInput(4, 12)
 
-pb.timeMeasure = 2
+pb.timeQuarter = 2
 # print("\nHow many triggers per quarter note? (2-2)")
-# pb.timeMeasure = ui.askInput(2, 2)
+# pb.timeQuarter = ui.askInput(2, 2)
 
 # BPM selection
-print("\nChoose a BPM: ")
+print("\nChoose a BPM: (50-200)")
 bpm = ui.askInput(50, 200)
 
 # Generate the actual beat
 # First boolean determines if the beat is actually generated
 # False will just play a predefined sequence consisting of 8 triggers
-bgen.generate(True, pb.timeBeats, pb.timeMeasure)
+bgen.generate(True, pb.timeBeats, pb.timeQuarter)
 
 # Calculates the length of triggers and display info
 pb.initPlayback(bpm, True)
@@ -65,19 +65,22 @@ while True:
 
     # Exit program
     if userInput[0].lower() == "exit" or userInput[0].lower() == "quit" or userInput[0].lower() == "e":
+        pb.playback = False
         ui.exitProgram()
 
     # Settings
     elif userInput[0].lower() == "bpm":
         bpm = ui.checkInput(userInput[1], bpm, 50, 200)
+    elif userInput[0].lower() == "time":
+        pb.timeBeats = ui.checkInput(userInput[1], pb.timeBeats, 4, 12)
 
     # Show help file
     elif userInput[0].lower() == "help":
         ui.helpFile()
 
     # Generate a beat
-    elif userInput[0].lower() == "generate":
-        bgen.generate(True, pb.timeBeats, pb.timeMeasure)
+    elif userInput[0].lower() == "gen":
+        bgen.generate(True, pb.timeBeats, pb.timeQuarter)
 
     # Start or restart playback
     elif userInput[0].lower() == "start":
@@ -90,6 +93,11 @@ while True:
             pb.playback = False
         else:
             print("Playback has already stopped \n")
+
+    # Ignore empty input.
+    # This prevents filling the commandline with unnecessary error messages
+    elif userInput[0] == "":
+        pass
 
     # Command not recognized
     else:

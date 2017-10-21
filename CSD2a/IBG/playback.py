@@ -47,17 +47,17 @@ class samplePlayer:
 
 # Function which initializes all variables needed for playback
 def initPlayback(bpm, printInfo=False):
-    global timeMeasure, trigCount, triggerLength, playbackStart, playback, timing
+    global timeQuarter, trigCount, triggerLength, playbackStart, playback, timing
 
     trigCount = 0
-    triggerLength = 60/bpm/timeMeasure
+    triggerLength = 60/bpm/timeQuarter
 
     # Save time used for checking timing inbetween notes, only used for debugging
     timing = time.time()
 
     # Only prints info if specifically asked for (i.e. when debugging)
     if printInfo:
-        print("Initializing playback \n- A measure has", timeBeats, "triggers\n- A single trigger takes", int(1000*triggerLength), "ms\n-", timeMeasure, "triggers per quarter note\n")
+        print("Initializing playback \n- A measure has", timeBeats, "triggers\n- A single trigger takes", int(1000*triggerLength), "ms\n-", timeQuarter, "triggers per quarter note\n")
 
     playbackStart = time.time()
     playback = True
@@ -76,7 +76,7 @@ def playbackThread():
                 # Send a trigger to each player with the triggers from the corresponding sequence
                 for i in range(len(samples)):
                     sounds[i].playSample(bgen.sequences[i][trigCount%8])
-
+                    
                 trigCount += 1
 
                 # Only used for checking timing, not required for playback
