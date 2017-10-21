@@ -1,42 +1,44 @@
 import random
 
+printInfo = False
 
+def generate(timeBeats, timeQuarter):
+    global sequences, seq0, seq1, seq2, impBeats, printInfo
 
-def generate(generation, timeBeats, timeQuarter):
-    global sequences, seq0, seq1, seq2, impBeats
-    # print("\ngen\tGenerating beat:", timeBeats, "/", timeQuarter)
+    if printInfo:
+        print("\ngen\tGenerating beat:", timeBeats, "/", timeQuarter)
 
     # Clear the lists on each (re)generation
     seq0 = []
     seq1 = []
     seq2 = []
 
-    if generation:
-        # Find the beats required for establishing the measure feel
-        # I called these impBeats, short for importantBeats
-        # Will return a list consiting of 2, 3 or 4's
-        # They represent the time relative to the previous trigger:
-        # [2, 3, 2] = [0, 2, 5] or [1, 0, 1, 0, 0, 1, 0]
-        findImportantBeats(timeBeats)
+    # Find the beats required for establishing the measure feel
+    # I called these impBeats, short for importantBeats
+    # Will return a list consiting of 2, 3 or 4's
+    # They represent the time relative to the previous trigger:
+    # [2, 3, 2] = [0, 2, 5] or [1, 0, 1, 0, 0, 1, 0]
+    findImportantBeats(timeBeats)
 
-        # Shuffled for more variation
-        random.shuffle(impBeats)
+    # Shuffled for more variation
+    random.shuffle(impBeats)
+    if printInfo:
         print("\n_\tDivided measure into prioritized hits:", impBeats)
 
-        # Assing the impBeats to the kick or the snare
-        assignImportant(timeBeats)
+    # Assing the impBeats to the kick or the snare
+    assignImportant(timeBeats)
 
-    else:
-        # Play the preset beat (boooring)
-        seq0 = [1, 0, 1, 0]
-        seq1 = [0, 0, 1, 0]
-        seq2 = [2, 1, 0, 2]
+    # Fill shit up with hats yo
+    fillHats(timeBeats)
 
     # Put all sequences into a list which will be read by the playback class
     sequences = [seq0, seq1, seq2]
 
 def assignImportant(timeBeats):
-    print("_\tAssigning beats..")
+    global printInfo, impBeatsAbs
+
+    if printInfo:
+        print("_\tAssigning beats..")
 
     # Fill each list with the right amount of non-triggers
     for i in range(timeBeats):
@@ -45,7 +47,7 @@ def assignImportant(timeBeats):
         seq2.append(0)
 
     # Put a kick at 0 because reasons
-    seq0[0] = 1
+    # seq0[0] = 1
 
     # Convert beat values from relative to absolute
     # [2, 3, 2] = [0, 2, 5]
@@ -54,11 +56,11 @@ def assignImportant(timeBeats):
 
     # Assign the beats to kick or snare
     for i in range(len(impBeatsAbs)):
-        x = random.randint(0, 2)
-        if x == 0:
+        x = random.randint(0, 9)
+        if x <= 3:
             # Beat will be assigned to kick
             seq0[impBeatsAbs[i]] = 1
-        elif x == 1:
+        elif x <= 7:
             # Beat will be assigned to snare
             seq1[impBeatsAbs[i]] = 1
         else:
@@ -66,8 +68,8 @@ def assignImportant(timeBeats):
             seq0[impBeatsAbs[i]] = 1
             seq1[impBeatsAbs[i]] = 1
 
-    # Print the results
-    print("Kick  ", seq0, "\nSnare ", seq1, "\nHihats", seq2, "\n")
+    if printInfo:
+        print("Kick  ", seq0, "\nSnare ", seq1, "\nHihats", seq2, "\n")
 
 def findImportantBeats(timeBeats):
     global impBeats
@@ -111,7 +113,12 @@ def relToAbs(listIn):
     listOut.pop()
     return listOut
 
-# Sequence of drumtriggers
-# 0 no trigger
-# 1 normal trigger, plays a sound
-# 2 random trigger, sometimes plays a sound
+def fillHats(timeBeats):
+    global seq0, seq1, seq2
+
+    # BOOM YO, FREE HATS'N'SHIT
+    for i in range(timeBeats):
+        if seq0[i] == 0 and seq1[i] == 0:
+            seq2[i] = 1
+        else:
+            seq2[i] = 2

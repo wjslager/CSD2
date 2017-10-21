@@ -31,7 +31,6 @@ pb.loadSamples()
 print("\nHow many triggers per measure? (4-12)")
 pb.timeBeats = ui.askInput(4, 12)
 
-
 print("\nHow many triggers per quarter note? (1-4)")
 pb.timeQuarter = ui.askInput(1, 4)
 # pb.timeQuarter = 2
@@ -43,7 +42,7 @@ bpm = ui.askInput(50, 200)
 # Generate the actual beat
 # First boolean determines if the beat is actually generated
 # False will just play a predefined sequence consisting of 8 triggers
-bgen.generate(True, pb.timeBeats, pb.timeQuarter)
+bgen.generate(pb.timeBeats, pb.timeQuarter)
 
 # Calculates the length of triggers and display info
 pb.initPlayback(bpm, True)
@@ -83,22 +82,29 @@ while True:
 
     # Trigger the generation engine
     elif userInput[0].lower() == "gen":
-        bgen.generate(True, pb.timeBeats, pb.timeQuarter)
+        bgen.generate(pb.timeBeats, pb.timeQuarter)
 
     # BPM
-    elif userInput[0].lower() == "bpm":
+    elif userInput[0].lower() == "bpm" and len(userInput) > 1:
         bpm = ui.checkInput(userInput[1], bpm, 50, 200)
+    elif userInput[0].lower() == "bpm":
+        print(" ! Missing argument: \n  expecting bpm + value")
 
     # Time signature
-    elif userInput[0].lower() == "time":
+    elif userInput[0].lower() == "time" and len(userInput) > 1:
         # If value is valid, stop playback to prevent issues
         if 12 >= int(userInput[1]) >= 4:
             pb.playback = False
+            # bgen.generate(pb.timeBeats, pb.timeQuarter)
         pb.timeBeats = ui.checkInput(userInput[1], pb.timeBeats, 4, 12)
+    elif userInput[0].lower() == "time":
+        print(" ! Missing argument: \n  expecting time + value")
 
     # Quarter notes resolution
-    elif userInput[0].lower() == "quarter":
+    elif userInput[0].lower() == "quarter" and len(userInput) > 1:
         pb.timeQuarter = ui.checkInput(userInput[1], pb.timeQuarter, 1, 4)
+    elif userInput[0].lower() == "quarter":
+        print(" ! Missing argument: \n  expecting quarter + value")
 
     # Show help file
     elif userInput[0].lower() == "help":
