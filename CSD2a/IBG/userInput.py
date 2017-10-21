@@ -17,7 +17,7 @@ def askInput(low, high):
             return int(inputValue)
         else:
             # Try again
-            print("Invalid input. Must be an integer ranging from", low, "to", high, "\n")
+            print("Invalid input. Must be an integer ranging from", low, "to", high)
             inputValue = input("> ")
 
 # Funtion which evaluates given input
@@ -25,7 +25,7 @@ def checkInput(inputValue, currentBPM, low, high):
     if inputValue.isdigit() and high >= int(inputValue) >= low:
         return int(inputValue)
     else:
-       print("Invalid input. Must be an integer ranging from", low, "to", high, "\n")
+       print("Invalid input. Must be an integer ranging from", low, "to", high)
        return currentBPM
 
 # Print command overview

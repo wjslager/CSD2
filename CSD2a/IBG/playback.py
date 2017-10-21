@@ -1,11 +1,13 @@
 import time
 import simpleaudio as sa
+import beatGenerator as bgen
+import random
 
 timingPrint = False
 
 # Function which loads the samples
-def loadSample():
-    global samples, sounds, sequences, seq0, seq1, seq2
+def loadSamples():
+    global samples, sounds
 
     sample0 = sa.WaveObject.from_wave_file("audio/kik" + str(drumkit).zfill(3) + ".wav")
     sample1 = sa.WaveObject.from_wave_file("audio/snr" + str(drumkit).zfill(3) + ".wav")
@@ -17,16 +19,6 @@ def loadSample():
     sounds = []
     for i in range(3):
         sounds.append(samplePlayer(i))
-
-    # Sequence of drumtriggers
-    # 0 no trigger
-    # 1 normal trigger, plays a sound
-    # 2 random trigger, sometimes plays a sound
-    seq0 = [1, 0, 0, 0, 1, 0, 0, 0]
-    seq1 = [0, 0, 0, 0, 1, 0, 0, 0]
-    seq2 = [0, 1, 1, 1, 0, 1, 1, 1]
-
-    sequences = [seq0, seq1, seq2]
 
 # Class which plays a single sample
 class samplePlayer:
@@ -55,18 +47,17 @@ class samplePlayer:
 
 # Function which initializes all variables needed for playback
 def initPlayback(bpm, printInfo=False):
-    global trigCount, trigsPerBeat, triggerLength, playbackStart, playback, timing
+    global timeMeasure, trigCount, triggerLength, playbackStart, playback, timing
 
     trigCount = 0
-    trigsPerBeat = 4
-    triggerLength = 60/bpm/trigsPerBeat
+    triggerLength = 60/bpm/timeMeasure
 
     # Save time used for checking timing inbetween notes, only used for debugging
     timing = time.time()
 
     # Only prints info if specifically asked for (i.e. when debugging)
     if printInfo:
-        print("Initializing playback \n- A single trigger takes", int(1000*triggerLength), "ms\n-", trigsPerBeat, "triggers per quarter note\n")
+        print("Initializing playback \n- A measure has", timeBeats, "triggers\n- A single trigger takes", int(1000*triggerLength), "ms\n-", timeMeasure, "triggers per quarter note\n")
 
     playbackStart = time.time()
     playback = True
@@ -84,7 +75,7 @@ def playbackThread():
             if time.time() >= nextTriggerTime:
                 # Send a trigger to each player with the triggers from the corresponding sequence
                 for i in range(len(samples)):
-                    sounds[i].playSample(sequences[i][trigCount%8])
+                    sounds[i].playSample(bgen.sequences[i][trigCount%8])
 
                 trigCount += 1
 

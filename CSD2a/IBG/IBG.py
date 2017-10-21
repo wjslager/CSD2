@@ -10,21 +10,39 @@ import userInput as ui
 import playback as pb
 import beatGenerator as bgen
 
+# Display some nice things
 ui.startupInfo()
 
 # = == === ==== ===== # Initialize values # ===== ==== === == = #
 
+# Initial settings selection.
+# Settings can be changed afterwards, but values are needed to:
+# - Load the samples
+# - initialize playback
+
 # Drumkit selection
-print("Available drumkits: \n 0: Synthetic \nChoose a drumkit: \n")
+print("Available drumkits: \n 0: Synthetic \n\nChoose a drumkit:")
 pb.drumkit = ui.askInput(0, 0)
 
-# Load the chosen drumkit
-pb.loadSample()
+# Load all the samples of the drumkit
+pb.loadSamples()
 
-# Initial BPM selection.
-# BPM can be changed afterwards, but a value is needed to initialize playback
-print("Choose a BPM: \n")
+# Time signature selection
+print("\nHow many triggers per measure? (4-12)")
+pb.timeBeats = ui.askInput(4, 12)
+
+pb.timeMeasure = 2
+# print("\nHow many triggers per quarter note? (2-2)")
+# pb.timeMeasure = ui.askInput(2, 2)
+
+# BPM selection
+print("\nChoose a BPM: ")
 bpm = ui.askInput(50, 200)
+
+# Generate the actual beat
+# First boolean determines if the beat is actually generated
+# False will just play a predefined sequence consisting of 8 triggers
+bgen.generate(True, pb.timeBeats, pb.timeMeasure)
 
 # Calculates the length of triggers and display info
 pb.initPlayback(bpm, True)
@@ -56,6 +74,10 @@ while True:
     # Show help file
     elif userInput[0].lower() == "help":
         ui.helpFile()
+
+    # Generate a beat
+    elif userInput[0].lower() == "generate":
+        bgen.generate(True, pb.timeBeats, pb.timeMeasure)
 
     # Start or restart playback
     elif userInput[0].lower() == "start":
