@@ -64,7 +64,7 @@ def initPlayback(bpm, printInfo=False):
 
 # Thread which plays the sequences
 def playbackThread():
-    global playbackStart, trigCount, triggerLength, timing, timingPrint
+    global playbackStart, trigCount, triggerLength, timing, timingPrint, timeBeats
 
     # This loop makes sure the thread doesn't stop even though playback can stop
     while True:
@@ -75,8 +75,8 @@ def playbackThread():
             if time.time() >= nextTriggerTime:
                 # Send a trigger to each player with the triggers from the corresponding sequence
                 for i in range(len(samples)):
-                    sounds[i].playSample(bgen.sequences[i][trigCount%8])
-                    
+                    sounds[i].playSample(bgen.sequences[i][trigCount%timeBeats])
+
                 trigCount += 1
 
                 # Only used for checking timing, not required for playback

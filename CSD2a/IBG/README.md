@@ -20,13 +20,11 @@ randomness hanteert, zodat de resulterende beats elke keer anders zijn.
 
 ## Todo
 - Add variation over time: list manipulation
-- Clean up the code:
- - Move functions to separate .py files
- - Check for duplicate code?
+- Check for duplicate code?
 
 ### Extra
 - Check all files ending with .wav and load them
-- Option to input each list at booting the program (or load from disk)
+- Option to bypass generation and load from file
 
 ## Issues
 - Clicks when samples are retriggered
@@ -36,16 +34,15 @@ randomness hanteert, zodat de resulterende beats elke keer anders zijn.
 ## Design
 
 ### Time signature division
-4-12
 
-| triggers |         |             |
-|---------:|:-------:|:-----------:|
-| **4**    | 2,2     |             |
-| 5        | 3,2     |             |
-| ***6***  | 3,3     | 2,2,2       |
-| 7        | 3,2,2   |             |
-| **8**    | 3,3,2   | 4,4         |
-| 9        | 3,3,3   | 2,2,2,3     |
-| 10       | 3,3,2,2 | 4,4,2       |
-| 11       | 3,3,3,2 | 2,2,2,2,3   |
-| ***12*** | 3,3,3,3 | 4,4,4       |
+| triggers |
+|---------:|:-------:|:---------:|
+| **4**    | 2,2     |
+| 5        | 3,2     |
+| ***6***  | 3,3     | 2,2,2     |
+| 7        | 3,2,2   | 3,3,1     |
+| **8**    | 3,3,2   | 4,4       | 4,2,2   |
+| 9        | 3,3,3   | 3,2,2,2   | 4,3,2   |
+| 10       | 3,3,2,2 | 4,4,2     | 4,3,3   |
+| 11       | 3,3,3,2 | 3,2,2,2,2 | 4,3,2,2 |
+| ***12*** | 3,3,3,3 | 4,4,4     | 4,3,3,2 |

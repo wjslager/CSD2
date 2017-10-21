@@ -32,20 +32,26 @@ def checkInput(inputValue, currentBPM, low, high):
 # Print command overview
 def helpFile():
     print("Overview of all commands\n")
-    print("{:6}{:10}{}".format("BPM", "<value>", "set new BPM to <value>. <value> must be an integer ranging from 50 to 200"))
-    print("{:16}{}".format("START", "(re)starts playback from the beginning"))
-    print("{:16}{}".format("STOP", "stops playback\n"))
-    print("{:16}{}".format("GEN", "(re)generates a beat\n"))
-    print("{:6}{:10}{}".format("EXIT", "QUIT", "self-explanatory"))
-    print("{:16}{}".format("HELP", "you already know what this does..\n"))
+    print("{:14}{}".format("START", "(re)starts playback from the beginning"))
+    print("{:14}{}".format("STOP", "stops playback\n"))
+
+    print("{:14}{}".format("GEN", "(re)generates a beat\n"))
+
+    print("{:10}{:4}{}".format("BPM", "$", "set BPM to $. (50-200)"))
+    print("{:10}{:4}{}".format("TIME", "$", "set triggers per measure to $. (4-12)"))
+    print("{:10}{:4}{}".format("QUARTER", "$", "set trigggers per quarter note to $. (1-4)\n"))
+
+    print("{:14}{}".format("HELP", "you already know what this does.."))
+    print("{:7}{:7}{}".format("EXIT", "QUIT", "self-explanatory\n"))
 
 # Exits the program and DESTROYS ALL THE EARTHLINGS!!
 def exitProgram():
-    clearConsole()
-    titleText()
-    ufo()
+    # clearConsole()
+    # titleText()
+    # ufo()
     sys.exit()
 
+# Clear the screen using cls for windows and clear for unix systems
 def clearConsole():
     os.system('cls' if os.name=='nt' else 'clear')
 

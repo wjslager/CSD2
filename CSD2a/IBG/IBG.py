@@ -31,9 +31,10 @@ pb.loadSamples()
 print("\nHow many triggers per measure? (4-12)")
 pb.timeBeats = ui.askInput(4, 12)
 
-pb.timeQuarter = 2
-# print("\nHow many triggers per quarter note? (2-2)")
-# pb.timeQuarter = ui.askInput(2, 2)
+
+print("\nHow many triggers per quarter note? (1-4)")
+pb.timeQuarter = ui.askInput(1, 4)
+# pb.timeQuarter = 2
 
 # BPM selection
 print("\nChoose a BPM: (50-200)")
@@ -68,20 +69,6 @@ while True:
         pb.playback = False
         ui.exitProgram()
 
-    # Settings
-    elif userInput[0].lower() == "bpm":
-        bpm = ui.checkInput(userInput[1], bpm, 50, 200)
-    elif userInput[0].lower() == "time":
-        pb.timeBeats = ui.checkInput(userInput[1], pb.timeBeats, 4, 12)
-
-    # Show help file
-    elif userInput[0].lower() == "help":
-        ui.helpFile()
-
-    # Generate a beat
-    elif userInput[0].lower() == "gen":
-        bgen.generate(True, pb.timeBeats, pb.timeQuarter)
-
     # Start or restart playback
     elif userInput[0].lower() == "start":
         pb.initPlayback(bpm)
@@ -93,6 +80,29 @@ while True:
             pb.playback = False
         else:
             print("Playback has already stopped \n")
+
+    # Trigger the generation engine
+    elif userInput[0].lower() == "gen":
+        bgen.generate(True, pb.timeBeats, pb.timeQuarter)
+
+    # BPM
+    elif userInput[0].lower() == "bpm":
+        bpm = ui.checkInput(userInput[1], bpm, 50, 200)
+
+    # Time signature
+    elif userInput[0].lower() == "time":
+        # If value is valid, stop playback to prevent issues
+        if 12 >= int(userInput[1]) >= 4:
+            pb.playback = False
+        pb.timeBeats = ui.checkInput(userInput[1], pb.timeBeats, 4, 12)
+
+    # Quarter notes resolution
+    elif userInput[0].lower() == "quarter":
+        pb.timeQuarter = ui.checkInput(userInput[1], pb.timeQuarter, 1, 4)
+
+    # Show help file
+    elif userInput[0].lower() == "help":
+        ui.helpFile()
 
     # Ignore empty input.
     # This prevents filling the commandline with unnecessary error messages
