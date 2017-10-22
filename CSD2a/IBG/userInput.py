@@ -5,8 +5,9 @@ import os
 # Print startup overview
 def titleText():
     clearConsole()
-    print("_ ____ ____ ____ ____ _  _ _    ____ ____    ___  ____ ____ ___    ____ ____ _  _ ____ ____ ____ ___ ____ ____ \n| |__/ |__/ |___ | __ |  | |    |__| |__/    |__] |___ |__|  |     | __ |___ |\ | |___ |__/ |__|  |  |  | |__/ \n| |  \ |  \ |___ |__] |__| |___ |  | |  \    |__] |___ |  |  |     |__] |___ | \| |___ |  \ |  |  |  |__| |  \ \n\n")
-    print("_ _ _ ____ ____ ___     ____ _    ____ ____ ____ ____ \n| | | |__| |__/ |  \    [__  |    |__| | __ |___ |__/ \n|_|_| |  | |  \ |__/    ___] |___ |  | |__] |___ |  \ \n")
+    print("_ ____ ____ ____ ____ _  _ _    ____ ____    ___  ____ ____ ___    ____ ____ _  _ ____ ____ ____ ___ ____ ____ \n| |__/ |__/ |___ | __ |  | |    |__| |__/    |__] |___ |__|  |     | __ |___ |\ | |___ |__/ |__|  |  |  | |__/ \n| |  \ |  \ |___ |__] |__| |___ |  | |  \    |__] |___ |  |  |     |__] |___ | \| |___ |  \ |  |  |  |__| |  \ \n")
+    print("By Ward Slager, 2017\n")
+    # print("_ _ _ ____ ____ ___     ____ _    ____ ____ ____ ____ \n| | | |__| |__/ |  \    [__  |    |__| | __ |___ |__/ \n|_|_| |  | |  \ |__/    ___] |___ |  | |__] |___ |  \ \n")
 
 # Function which asks and then evaluates input
 def askInput(low, high):
@@ -46,11 +47,16 @@ def helpFile():
     print("{:14}{}".format("HELP", "you already know what this does.."))
     print("{:7}{:7}{}".format("EXIT", "QUIT", "self-explanatory\n"))
 
-# Exits the program and DESTROYS ALL THE EARTHLINGS!!
+# Exits the program
 def exitProgram():
     # clearConsole()
     # titleText()
     # ufo()
+
+    # Print my nice snaredrum logo
+    file = open("snaredrum.txt", "r")
+    for line in file:
+        print(line, end='')
     sys.exit()
 
 # Clear the screen using cls for windows and clear for unix systems

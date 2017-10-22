@@ -27,9 +27,10 @@ randomness hanteert, zodat de resulterende beats elke keer anders zijn.
   - Option to bypass generation and load from file
 
 ## Issues
-- **When changing time values after the initail point of setting is triggers an array out of bounds in the sample play class**
+- **Changing time and then restarting playback without regenerating a beat might trigger an index out of bounds error**
+  - Seems to be fixed by triggering regeneration if changing timeBeats
 - Clicks when samples are retriggered
-- Timing inbetween triggers is sloppy
+- Timing in-between triggers is sloppy
 
 ## Design
 

@@ -46,7 +46,7 @@ def assignImportant(timeBeats):
         seq1.append(0)
         seq2.append(0)
 
-    # Put a kick at 0 because reasons
+    # Put a kick at 0
     seq0[0] = 1
 
     # Convert beat values from relative to absolute
@@ -54,19 +54,34 @@ def assignImportant(timeBeats):
     impBeatsAbs = relToAbs(impBeats)
     # print(impBeats, impBeatsAbs)
 
-    # Assign the beats to kick or snare
+    # For each importantBeat
+    # Assign it to kick or snare
     for i in range(len(impBeatsAbs)):
         x = random.randint(0, 9)
+
+        # random = 0 / 1 / 2 / 3
+        # Beat will be assigned to kick
         if x <= 3:
-            # Beat will be assigned to kick
             seq0[impBeatsAbs[i]] = 1
+
+        # random = 4 / 5 / 6 / 7
+        # Beat will be assigned to snare
         elif x <= 7:
-            # Beat will be assigned to snare
             seq1[impBeatsAbs[i]] = 1
+
+        # random = 8 / 9
+        # Beat will be assigned to both kick and snare
         else:
-            # Beat will be assigned to both
             seq0[impBeatsAbs[i]] = 1
             seq1[impBeatsAbs[i]] = 1
+
+    # Remove snares at 0
+    seq1[0] = 0
+
+    # Check if there are any snares at all
+    if seq1.count(1) < 1:
+        # Insert a snare trigger at the last important beat
+        seq1[impBeatsAbs[-1]] = 1
 
     if printInfo:
         print("Kick  ", seq0, "\nSnare ", seq1, "\nHihats", seq2, "\n")
@@ -116,9 +131,23 @@ def relToAbs(listIn):
 def fillHats(timeBeats):
     global seq0, seq1, seq2
 
-    # BOOM YO, FREE HATS'N'SHIT
+    # Append a 0 to prevent index out of bounds
+    seq2.append(0)
+
     for i in range(timeBeats):
+        # Randomly add a hihat after each trigger without kick or snare
         if seq0[i] == 0 and seq1[i] == 0:
-            seq2[i] = 1
+            if random.choice([True, False]):
+                seq2[i+1] = 1
+
+        # Add a hihat after each trigger with a snare
+        elif seq1[i] == 1:
+            seq2[i+1] = 1
+
         else:
-            seq2[i] = 2
+            # Index wraps around when negative
+            # Thanks Python!
+            seq2[i-1] = 2
+
+    # Remove last item
+    seq2.pop()
