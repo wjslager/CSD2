@@ -20,9 +20,12 @@ ui.titleText()
 # - Load the samples
 # - Start playback
 
+totalDrumkits = 4
+totalDrumkits -= 1 # Compensate for the filenames starting at 0
+
 # Drumkit selection
-print("Available drumkits: \n 0: Dry \n 1: Synthetic \n 2: Dub \n\nChoose a drumkit: (0-2)")
-pb.drumkit = ui.askInput(0, 2)
+print("Available drumkits: \n 0: Dry \n 1: Synthetic \n 2: Dub \n 3: Beatboxing \n\nChoose a drumkit:")
+pb.drumkit = ui.askInput(0, totalDrumkits)
 
 # Load all the samples of the drumkit
 pb.loadSamples()
@@ -55,13 +58,23 @@ try:
 except:
    print("Error: unable to start thread \n")
 
+askForInput = True
+prevUserInput = None
+
 # Loop checking for user input
 while True:
+
     # Wait for keyboard input
     userInput = input("> ")
 
     # Splits input into a list, allows evaluating indiviual words
     userInput = userInput.split(" ", 1)
+
+    # Empty input or a space will repeat the last command
+    if userInput[0] == "":
+        if not prevUserInput == None:
+            print(" Repeating:", ' '.join(prevUserInput))
+            userInput = prevUserInput
 
     # Exit program
     if userInput[0].lower() == "exit" or userInput[0].lower() == "quit" or userInput[0].lower() == "e":
@@ -114,20 +127,31 @@ while True:
         if len(userInput) <= 1:
             print(" ! Missing argument: \n  expecting drumkit + value")
         else:
-            pb.drumkit = ui.checkInput(userInput[1], pb.drumkit, 0, 2)
+            pb.drumkit = ui.checkInput(userInput[1], pb.drumkit, 0, totalDrumkits)
             # If value is valid: load selected drumkit
-            if userInput[1].isdigit() and 2 >= int(userInput[1]) >= 0:
+            if userInput[1].isdigit() and totalDrumkits >= int(userInput[1]) >= 0:
                 pb.loadSamples()
+
+    # Print current sequences
+    elif userInput[0].lower() == "print":
+        # print("Hihats", bgen.sequences[2], "\nSnare ", bgen.sequences[1], "\nKick  ", bgen.sequences[0], "\n")
+        hhcPrint = " ".join(str(i) for i in bgen.sequences[2])
+        snrPrint = " ".join(str(i) for i in bgen.sequences[1])
+        kikPrint = " ".join(str(i) for i in bgen.sequences[0])
+        print(" Hihats:", hhcPrint.replace("0", "-"))
+        print(" Snare: ", snrPrint.replace("0", "-"))
+        print(" Kick:  ", kikPrint.replace("0", "-"))
 
     # Show help file
     elif userInput[0].lower() == "help":
         ui.helpFile()
 
-    # Ignore empty input.
-    # This prevents filling the commandline with unnecessary error messages
-    elif userInput[0] == "":
-        pass
+    # SPOOKY
+    elif userInput[0].lower() == "ufo":
+        ui.ufo()
 
     # Command not recognized
     else:
         print(" ".join(userInput),"not recognized, type help for an overview of all commands \n")
+
+    prevUserInput = userInput

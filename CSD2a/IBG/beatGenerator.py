@@ -22,6 +22,7 @@ def generate(timeBeats, timeQuarter):
 
     # Shuffled for more variation
     random.shuffle(impBeats)
+
     if printInfo:
         print("\n_\tDivided measure into prioritized hits:", impBeats)
 
@@ -147,7 +148,10 @@ def fillHats(timeBeats):
         else:
             # Index wraps around when negative
             # Thanks Python!
-            seq2[i-1] = 2
+            seq2[i] = 2
 
     # Remove last item
     seq2.pop()
+
+    # Put a hihat at 0
+    seq2[0] = 1
