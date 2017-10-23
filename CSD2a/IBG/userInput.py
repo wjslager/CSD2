@@ -37,6 +37,7 @@ def helpFile():
     print("{:14}{}".format("STOP", "stops playback\n"))
 
     print("{:14}{}".format("GEN", "(re)generates a beat\n"))
+    print("{:14}{}".format("GENP", "(re)generates a beat and print the result\n"))
 
     print("{:14}{}".format("", "The following commands only go into effect after restarting playback (and regeneration):"))
     print("{:10}{:4}{}".format("BPM", "$", "set BPM to $. (50-200)"))

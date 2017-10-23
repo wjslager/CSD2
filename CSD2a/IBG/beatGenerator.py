@@ -84,6 +84,11 @@ def assignImportant(timeBeats):
         # Insert a snare trigger at the last important beat
         seq1[impBeatsAbs[-1]] = 1
 
+    for i in range(len(seq0)):
+        # Randomly adds a 2 after: 0 1
+        if seq0[i-1] != 0 and seq0[i-2] == 0 and random.choice([True, False]):
+            seq0[i] = 2
+
     if printInfo:
         print("Kick  ", seq0, "\nSnare ", seq1, "\nHihats", seq2, "\n")
 
@@ -133,13 +138,13 @@ def fillHats(timeBeats):
     global seq0, seq1, seq2
 
     # Append a 0 to prevent index out of bounds
+    seq0.append(0)
     seq2.append(0)
 
     for i in range(timeBeats):
-        # Randomly add a hihat after each trigger without kick or snare
-        if seq0[i] == 0 and seq1[i] == 0:
-            if random.choice([True, False]):
-                seq2[i+1] = 1
+        # Randomly add a hihat or kick after each trigger without kick or snare
+        if seq0[i] == 0 and seq1[i] == 0 and random.choice([True, False]):
+            seq2[i+1] = 1
 
         # Add a hihat after each trigger with a snare
         elif seq1[i] == 1:
@@ -151,6 +156,7 @@ def fillHats(timeBeats):
             seq2[i] = 2
 
     # Remove last item
+    seq0.pop()
     seq2.pop()
 
     # Put a hihat at 0

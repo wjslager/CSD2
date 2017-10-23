@@ -97,6 +97,16 @@ while True:
     elif userInput[0].lower() == "gen":
         bgen.generate(pb.timeBeats, pb.timeQuarter)
 
+    # Trigger the generation engine and print the result
+    elif userInput[0].lower() == "genp":
+        bgen.generate(pb.timeBeats, pb.timeQuarter)
+        hhcPrint = " ".join(str(i) for i in bgen.sequences[2])
+        snrPrint = " ".join(str(i) for i in bgen.sequences[1])
+        kikPrint = " ".join(str(i) for i in bgen.sequences[0])
+        print("  Hihats:", hhcPrint.replace("0", "-"))
+        print("  Snare: ", snrPrint.replace("0", "-"))
+        print("  Kick:  ", kikPrint.replace("0", "-"))
+
     # BPM
     elif userInput[0].lower() == "bpm":
         if len(userInput) <= 1:
@@ -134,13 +144,12 @@ while True:
 
     # Print current sequences
     elif userInput[0].lower() == "print":
-        # print("Hihats", bgen.sequences[2], "\nSnare ", bgen.sequences[1], "\nKick  ", bgen.sequences[0], "\n")
         hhcPrint = " ".join(str(i) for i in bgen.sequences[2])
         snrPrint = " ".join(str(i) for i in bgen.sequences[1])
         kikPrint = " ".join(str(i) for i in bgen.sequences[0])
-        print(" Hihats:", hhcPrint.replace("0", "-"))
-        print(" Snare: ", snrPrint.replace("0", "-"))
-        print(" Kick:  ", kikPrint.replace("0", "-"))
+        print("  Hihats:", hhcPrint.replace("0", "-"))
+        print("  Snare: ", snrPrint.replace("0", "-"))
+        print("  Kick:  ", kikPrint.replace("0", "-"))
 
     # Show help file
     elif userInput[0].lower() == "help":
