@@ -46,6 +46,7 @@ def helpFile():
     print("{:10}{:4}{}".format("KIT", "$", "set drumkit to $. (0-1)\n"))
 
     print("{:14}{}".format("PRINT", "print the current beat"))
+    print("{:10}{:4}{}".format("MIDI", "$", "write midi file with filename $.\n"))
     print("{:14}{}".format("HELP", "you already know what this does.."))
     print("{:7}{:7}{}".format("EXIT", "QUIT", "self-explanatory\n"))
 

@@ -9,6 +9,7 @@ import sys
 import userInput as ui
 import playback as pb
 import beatGenerator as bgen
+import writeMidi as midi
 
 # Display some nice things
 ui.titleText()
@@ -34,8 +35,8 @@ pb.loadSamples()
 print("\nHow many triggers per measure? (4-12)")
 pb.timeBeats = ui.askInput(4, 12)
 
-print("\nHow many triggers per quarter note? (1-4)")
-pb.timeQuarter = ui.askInput(1, 4)
+print("\nHow many triggers per quarter note? (2 or 4)")
+pb.timeQuarter = ui.askInput(2, 4)
 # pb.timeQuarter = 2
 
 # BPM selection
@@ -150,6 +151,15 @@ while True:
         print("  Hihats:", hhcPrint.replace("0", "-"))
         print("  Snare: ", snrPrint.replace("0", "-"))
         print("  Kick:  ", kikPrint.replace("0", "-"))
+
+    # Write beat to midi file
+    elif userInput[0].lower() == "midi":
+        # Set filename if not specified
+        if len(userInput) <= 1:
+            print(" ! Missing argument: \n  filename set to irregbeat.mid")
+            userInput.append("irregbeat")
+        # Write midifile
+        midi.writeMidi(bgen.sequences, userInput[1], bpm, pb.timeQuarter, pb.timeBeats)
 
     # Show help file
     elif userInput[0].lower() == "help":
