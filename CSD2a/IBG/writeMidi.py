@@ -60,4 +60,4 @@ def writeMidi(sequences, filename, bpm, timeQuarter, timeBeats):
     with open(filename+".mid", "wb") as output_file:
         MyMIDI.writeFile(output_file)
 
-    print("Midi written to", filename+".mid\n")
+    print(" midi written to", filename+".mid\n")

@@ -4,12 +4,19 @@ import time
 import random
 import _thread
 import sys
+from colorama import init, Fore, Back, Style
 
 # Project modules
 import userInput as ui
 import playback as pb
 import beatGenerator as bgen
 import writeMidi as midi
+
+# Error Color
+erc = "\033[31m"
+
+# Initialize colorama
+init(autoreset=True)
 
 # Display some nice things
 ui.titleText()
@@ -36,7 +43,7 @@ print("\nHow many triggers per measure? (4-12)")
 pb.timeBeats = ui.askInput(4, 12)
 
 print("\nHow many triggers per quarter note? (2 or 4)")
-pb.timeQuarter = ui.askInput(2, 4)
+pb.timeQuarter = ui.askInputOr(2, 4)
 # pb.timeQuarter = 2
 
 # BPM selection
@@ -57,7 +64,7 @@ pb.initPlayback(bpm, True)
 try:
    _thread.start_new_thread(pb.playbackThread, ())
 except:
-   print("Error: unable to start thread \n")
+   print(erc+"Error: unable to start thread \n")
 
 askForInput = True
 prevUserInput = None
@@ -92,7 +99,7 @@ while True:
         if pb.playback:
             pb.playback = False
         else:
-            print("Playback has already stopped \n")
+            print(erc+"Playback has already stopped \n")
 
     # Trigger the generation engine
     elif userInput[0].lower() == "gen":
@@ -111,14 +118,14 @@ while True:
     # BPM
     elif userInput[0].lower() == "bpm":
         if len(userInput) <= 1:
-            print(" ! Missing argument: \n  expecting bpm + value")
+            print(erc+" ! Missing argument: \n  expecting bpm + value")
         else:
             bpm = ui.checkInput(userInput[1], bpm, 50, 200)
 
     # Time signature
     elif userInput[0].lower() == "time":
         if len(userInput) <= 1:
-            print(" ! Missing argument: \n  expecting time + value")
+            print(erc+" ! Missing argument: \n  expecting time + value")
         else:
             pb.timeBeats = ui.checkInput(userInput[1], pb.timeBeats, 4, 12)
             if userInput[1].isdigit() and 12 >= int(userInput[1]) >= 4:
@@ -129,14 +136,14 @@ while True:
     # Quarter notes resolution
     elif userInput[0].lower() == "quarter":
         if len(userInput) <= 1:
-            print(" ! Missing argument: \n  expecting quarter + value")
+            print(erc+" ! Missing argument: \n  expecting quarter + value")
         else:
-            pb.timeQuarter = ui.checkInput(userInput[1], pb.timeQuarter, 1, 4)
+            pb.timeQuarter = ui.checkInputOr(userInput[1], pb.timeQuarter, 2, 4)
 
     # Drumkit
     elif userInput[0].lower() == "kit":
         if len(userInput) <= 1:
-            print(" ! Missing argument: \n  expecting drumkit + value")
+            print(erc+" ! Missing argument: \n  expecting drumkit + value")
         else:
             pb.drumkit = ui.checkInput(userInput[1], pb.drumkit, 0, totalDrumkits)
             # If value is valid: load selected drumkit
@@ -156,7 +163,7 @@ while True:
     elif userInput[0].lower() == "midi":
         # Set filename if not specified
         if len(userInput) <= 1:
-            print(" ! Missing argument: \n  filename set to irregbeat.mid")
+            print(erc+" ! Missing argument:\n  filename set to irregbeat.mid")
             userInput.append("irregbeat")
         # Write midifile
         midi.writeMidi(bgen.sequences, userInput[1], bpm, pb.timeQuarter, pb.timeBeats)
@@ -171,6 +178,6 @@ while True:
 
     # Command not recognized
     else:
-        print(" ".join(userInput),"not recognized, type help for an overview of all commands \n")
+        print(erc+" ".join(userInput), erc+"not recognized, type help for an overview of all commands \n")
 
     prevUserInput = userInput

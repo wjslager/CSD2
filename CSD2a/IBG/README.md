@@ -21,10 +21,9 @@ maatsoort (logische ritmische onderverdeling v. low, mid, high) en daarnaast een
 randomness hanteert, zodat de resulterende beats elke keer anders zijn.
 
 ### Todo
-- Make the snaredrum pattern more interesting..
+- Improve hihat algorithm
 - Bonus stuff:
-  - Check all files ending with .wav and load them
-  - Option to bypass generation and load from file
+  - Option to bypass generation and load (midi?) from file
 
 ## Issues
 - **Changing time and then restarting playback without regenerating a beat might trigger an index out of bounds error**
