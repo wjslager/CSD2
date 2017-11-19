@@ -85,7 +85,8 @@ while True:
             userInput = prevUserInput
 
     # Exit program
-    if userInput[0].lower() == "exit" or userInput[0].lower() == "quit" or userInput[0].lower() == "e":
+    if userInput[0].lower() in ["exit", "quit", "e"]:
+    # if userInput[0].lower() == "exit" or userInput[0].lower() == "quit" or userInput[0].lower() == "e":
         pb.playback = False
         ui.exitProgram()
 
