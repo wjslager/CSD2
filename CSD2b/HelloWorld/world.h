@@ -1,5 +1,5 @@
 class World
 {
 public:
-  void hallo()
+  void hallo();
 };
