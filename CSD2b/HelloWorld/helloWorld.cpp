@@ -3,8 +3,10 @@
 
 int main()
 {
-  World wereld;
+  World wereld(2000);
 
+  wereld.hallo();
+  wereld.setyear(2001);
   wereld.hallo();
   return 0;
 }
