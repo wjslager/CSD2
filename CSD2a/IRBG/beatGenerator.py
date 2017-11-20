@@ -85,7 +85,7 @@ def assignImportant(timeBeats):
         seq1[impBeatsAbs[-1]] = 1
 
     for i in range(len(seq0)):
-        # Randomly adds a 2 after: 0 1
+        # Randomly adds a 2 kick after: 0 1
         if seq0[i-1] != 0 and seq0[i-2] == 0 and random.choice([True, False]):
             seq0[i] = 2
 

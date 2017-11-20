@@ -10,7 +10,7 @@ erc = "\033[31m"
 def titleText():
     clearConsole()
     print("\033[96m"+"_ ____ ____ ____ ____ _  _ _    ____ ____    ___  ____ ____ ___    ____ ____ _  _ ____ ____ ____ ___ ____ ____ \n| |__/ |__/ |___ | __ |  | |    |__| |__/    |__] |___ |__|  |     | __ |___ |\ | |___ |__/ |__|  |  |  | |__/ \n| |  \ |  \ |___ |__] |__| |___ |  | |  \    |__] |___ |  |  |     |__] |___ | \| |___ |  \ |  |  |  |__| |  \ \n")
-    print("By Ward Slager, 2017\n")
+    print("By Ward Slager, 2017\nType help for an overview of all commands\n")
     # print("_ _ _ ____ ____ ___     ____ _    ____ ____ ____ ____ \n| | | |__| |__/ |  \    [__  |    |__| | __ |___ |__/ \n|_|_| |  | |  \ |__/    ___] |___ |  | |__] |___ |  \ \n")
 
 # Function which asks and then evaluates input in a specified range
@@ -90,9 +90,16 @@ def exitProgram():
         print(line, end='')
     sys.exit()
 
-# Clear the screen using cls for windows and clear for unix systems
 def clearConsole():
-    os.system('cls' if os.name=='nt' else 'clear')
+    # Try to clear using clear, and then cls on windows systems
+    # This is done because when using cygwin (or other emulators)
+    # os.name=='nt' will return true while it still does not react cls
+    # By using clear first and then cls on windows systems this
+    # sort of fixes the problem
+    os.system('clear')
+    if os.name=='nt':
+        os.system('cls')
+
 
 def ufo():
     print("SURRENDER EARTHLINGS!")
