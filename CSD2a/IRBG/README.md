@@ -34,11 +34,11 @@ Say the algorithm chooses [3,2,2] this will result in an rhythm consisting of th
 
 Now if we shuffle the results the following variations can be made:
 
-| 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-----:|
-| x | - | - | x | - | x | - | 3 2 2 |
-| x | - | x | - | - | x | - | 2 3 2 |
-| x | - | x | - | x | - | - | 2 2 3 |
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | triggers |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:--------:|
+| x | - | - | x | - | x | - | 3 2 2    |
+| x | - | x | - | - | x | - | 2 3 2    |
+| x | - | x | - | x | - | - | 2 2 3    |
 
 #### Assigning the 'important beats'
 

@@ -7,11 +7,13 @@
 Instrument::Instrument(std::string newsound)
 {
   sound=newsound;
+  std::cout << " > Instrument created: " << sound << std::endl;
 }
 
 void Instrument::changeSound(std::string newsound)
 {
   sound=newsound;
+  std::cout << " > Instrument changed to: " << sound << std::endl;
 }
 
 // Play the sound
