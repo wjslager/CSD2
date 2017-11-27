@@ -1,3 +1,5 @@
+// Instrument class definition
+
 class Instrument
 {
 public:
@@ -8,5 +10,3 @@ public:
 private:
   std::string sound;
 };
-
-// Instrument class definition

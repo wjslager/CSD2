@@ -1,6 +1,9 @@
+// Instrument class implementation and functions
+
 #include <iostream>
 #include "instrument.h"
 
+// Constructor
 Instrument::Instrument(std::string newsound)
 {
   sound=newsound;
@@ -22,5 +25,3 @@ void Instrument::uziSound(int clipsize)
 {
   for (int i=0; i<clipsize; i++) makeSound();
 }
-
-// Instrument class implementation
