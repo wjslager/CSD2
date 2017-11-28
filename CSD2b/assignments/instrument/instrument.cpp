@@ -1,13 +1,16 @@
 // Instrument class implementation and functions
-
 #include <iostream>
 #include "instrument.h"
 
-// Constructor
 Instrument::Instrument(std::string newsound)
 {
-  sound=newsound;
-  std::cout << " > Instrument created: " << sound << std::endl;
+  std::cout << " > Instrument created" << std::endl;
+  Instrument::changeSound(newsound);
+}
+
+Instrument::~Instrument()
+{
+  std::cout << " > Instrument sold at local second-hand shop: " << sound << std::endl;
 }
 
 void Instrument::changeSound(std::string newsound)
