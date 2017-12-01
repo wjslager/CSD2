@@ -18,7 +18,7 @@ Pitch in midi notes
 
 ###### PitchedInstrument
 - constructor(int minPitch, int maxPitch)
-- setArticulation(string articulation)
+- changeArticulation(string articulation)
 - note(int pitch)
   - calls play("pitch, articulation") if note is in range
 - private:

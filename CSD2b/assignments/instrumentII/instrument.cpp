@@ -3,14 +3,14 @@
 
 Instrument::Instrument(std::string sound)
 {
-  this->sound=sound;
-  std::cout << " > Instrument created: " << sound << std::endl;
+  std::cout << " > Instrument created" << std::endl;
+  Instrument::changeSound(sound);
 }
 
-void Instrument::setSound(std::string sound)
+void Instrument::changeSound(std::string sound)
 {
-  this->sound=sound;
-  std::cout << " > Instrument changed to: " << sound << std::endl;
+  this->sound = sound;
+  std::cout << " > Instrument sound changed to: " << sound << std::endl;
 }
 
 void Instrument::play(std::string articulation)

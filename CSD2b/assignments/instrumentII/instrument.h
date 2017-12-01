@@ -5,7 +5,7 @@ class Instrument
 {
 public:
   Instrument(std::string sound);
-  void setSound(std::string sound);
+  void changeSound(std::string sound);
   void play(std::string articulation);
 private:
   std::string sound;
