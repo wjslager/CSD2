@@ -2,7 +2,7 @@
 #include <iostream>
 #include "squarewave.h"
 
-SquareWave::SquareWave()
+SquareWave::SquareWave() : Oscillator()
 {
   sample = 0;
 }
@@ -12,8 +12,8 @@ SquareWave::~SquareWave()
 
 }
 
-void SquareWave::getSample(double phase)
+double SquareWave::getSample()
 {
   sample = phase < M_PI ? 1 : -1;
-  std::cout << sample << std::endl;
+  return sample;
 }

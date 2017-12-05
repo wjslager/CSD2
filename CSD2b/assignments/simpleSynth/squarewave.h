@@ -1,12 +1,14 @@
 #ifndef _SQUAREWAVE_H_
 #define _SQUAREWAVE_H_
 
-class SquareWave
+#include "oscillator.h"
+
+class SquareWave : public Oscillator
 {
 public:
   SquareWave();
   ~SquareWave();
-  void getSample(double phase);
+  double getSample();
 private:
   double sample;
 };

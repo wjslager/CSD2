@@ -1,12 +1,14 @@
 #ifndef _SINEWAVE_H_
 #define _SINEWAVE_H_
 
-class SineWave
+#include "oscillator.h"
+
+class SineWave : public Oscillator
 {
 public:
   SineWave();
   ~SineWave();
-  void getSample(double phase);
+  double getSample();
 private:
   double sample;
 };

@@ -1,8 +1,7 @@
 #include <cmath>
-#include <iostream>
 #include "sinewave.h"
 
-SineWave::SineWave()
+SineWave::SineWave() : Oscillator()
 {
   sample = 0;
 }
@@ -12,8 +11,8 @@ SineWave::~SineWave()
 
 }
 
-void SineWave::getSample(double phase)
+double SineWave::getSample()
 {
   sample = sin(phase);
-  std::cout << sample << std::endl;
+  return sample;
 }
