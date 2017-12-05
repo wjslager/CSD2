@@ -9,8 +9,6 @@ public:
   SquareWave();
   ~SquareWave();
   double getSample();
-private:
-  double sample;
 };
 
 #endif

@@ -9,12 +9,18 @@ int main(int argc, char *argv[])
   // Declare oscillators
   SineWave sine;
   SquareWave sqr;
+  sine.setFrequency(200, 48000);
+  std::cout.precision(2);
 
-  sine.setFrequency(2, 48000);
+  // Render some samples of a sinewave
+  for (int i=0; i<20; i++) {
+    std::cout << 1*sine.getSample() << std::endl;
+    sine.tick();
+  }
 
-  // Render a sinewave
-  // for (int i=0; i<32; i++) {
-  //   std::cout << sine.getSample() << std::endl;
-  //   sine.tick();
-  // }
+  // Render some samples of a sinewave
+  for (int i=0; i<20; i++) {
+    std::cout << sqr.getSample() << std::endl;
+    sqr.tick();
+  }
 }

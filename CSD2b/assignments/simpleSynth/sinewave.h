@@ -9,8 +9,6 @@ public:
   SineWave();
   ~SineWave();
   double getSample();
-private:
-  double sample;
 };
 
 #endif

@@ -4,16 +4,14 @@
 
 SquareWave::SquareWave() : Oscillator()
 {
-  sample = 0;
 }
 
 SquareWave::~SquareWave()
 {
-
 }
 
 double SquareWave::getSample()
 {
-  sample = phase < M_PI ? 1 : -1;
-  return sample;
+  // If (phase < PI) return 1, else -1
+  return phase < M_PI ? 1 : -1;
 }
