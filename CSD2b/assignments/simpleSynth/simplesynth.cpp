@@ -6,27 +6,22 @@
 
 SimpleSynth::SimpleSynth()
 {
-  SineWave sine;
-  SquareWave square;
+  oscillator.setFrequency(20, 48000);
 }
 
 SimpleSynth::~SimpleSynth()
 {
-
 }
 
-void SimpleSynth::process()
+void SimpleSynth::process(float *outputBufferRef)
 {
   for (int i=0; i<256; i++) {
-    switch (waveType) {
-      case 0 : 
-    }
-    // buffer[i] = getSample()
-    // osc.tick();
+    outputBufferRef[i] = oscillator.getSample();
+    oscillator.tick();
   }
 }
 
-void SimpleSynth::setWaveform()
-{
-  // set new wavetype
-}
+// void SimpleSynth::setWaveform()
+// {
+//   // set new wavetype
+// }

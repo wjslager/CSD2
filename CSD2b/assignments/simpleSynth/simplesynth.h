@@ -1,15 +1,18 @@
+#include "sinewave.h"
+
 #ifndef _SIMPLESYNTH_H_
 #define _SIMPLESYNTH_H_
 
 class SimpleSynth
 {
 public:
+  // enum waveType{sine, square};
+
   SimpleSynth();
   ~SimpleSynth();
-  void process();
-  void setWaveform();
+  void process(float *outputBufferRef);
 private:
-  enum waveType{sine, square};
+  SineWave oscillator;
 };
 
 #endif

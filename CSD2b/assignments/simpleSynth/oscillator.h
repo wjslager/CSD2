@@ -9,10 +9,10 @@ public:
   void setFrequency(float hz, int sampleRate);
   void tick();
 protected:
-  double phase;
+  float phase;
 private:
-  double tickInc; // value to add to phase for each tick
-  double frequency; // in hz
+  float tickInc; // value to add to phase for each tick
+  float frequency; // in hz
 };
 
 #endif
