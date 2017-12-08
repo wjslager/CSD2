@@ -12,12 +12,12 @@ public:
   virtual double getSample() = 0;
 protected:
   float phase;
+  static constexpr double twoPi = 2 * M_PI;
 private:
   float tickInc; // value to add to phase for each tick
   float frequency; // in hz
   // Static: shared by all instances
   // Constexpr: value calculated at compilation and thus not changeable
-  static constexpr double twoPi = 2 * M_PI;
 };
 
 #endif

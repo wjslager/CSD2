@@ -46,5 +46,7 @@ void Oscillator::setFrequency(float hz, int sampleRate)
 
 void Oscillator::tick()
 {
-  phase += tickInc;
+  // fmod is % for floats and doubles
+  // wraps the phase around at twoPi to make sure the squarewave works
+  phase = fmod((phase + tickInc), twoPi);
 }

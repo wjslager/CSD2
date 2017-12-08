@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include "synth.h"
 #include "simplesynth.h"
 #include "oscillator.h"
 #include "sinewave.h"
@@ -9,18 +10,24 @@ float samples[256];
 
 int main(int argc, char *argv[])
 {
-  SimpleSynth testSynth;
-  testSynth.setGain(1);
-  testSynth.process(samples);
+  SimpleSynth test(48000);
+  test.setGain(1);
+  test.setFrequency(20000);
+  test.process(samples);
 
   // Print the audio
   for (int i=0; i<256; i++) {
     std::cout << samples[i] << std::endl;
   }
 
-  testSynth.setWave(1);
+  test.setWave(1);
+  test.setFrequency(10000);
+  test.process(samples);
 
-  
+  // Print the audio
+  for (int i=0; i<256; i++) {
+    std::cout << samples[i] << std::endl;
+  }
 
   /*
   // Declare oscillators

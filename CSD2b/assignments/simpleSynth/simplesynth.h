@@ -1,22 +1,22 @@
-#include "sinewave.h"
-#include "squarewave.h"
-
 #ifndef _SIMPLESYNTH_H_
 #define _SIMPLESYNTH_H_
 
-class SimpleSynth
+#include "sinewave.h"
+#include "squarewave.h"
+#include "synth.h"
+
+class SimpleSynth : public Synth
 {
 public:
-  SimpleSynth();
+  SimpleSynth(float sampleRate);
   virtual ~SimpleSynth(); // waarom moet deze virtual??? <<<<<<<<<<<
-  void setGain(float gain);
+  void setFrequency(float newFrequency);
   void setWave(int newWave);
   void process(float *outputBufferRef);
 private:
   Oscillator* osc;
   SineWave sine;
   SquareWave sqr;
-  float gain;
 };
 
 #endif
