@@ -6,10 +6,12 @@ Oscillator::Oscillator()
 {
   phase = 0;
   tickInc = 0;
+  // std::cout << "Oscillator constructor" << std::endl;
 }
 
 Oscillator::~Oscillator()
 {
+  // std::cout << "Oscillator deconstructor" << std::endl;
 }
 
 void Oscillator::setFrequency(float hz, int sampleRate)
@@ -34,7 +36,7 @@ void Oscillator::setFrequency(float hz, int sampleRate)
   */
   if (hz < 0.5 * sampleRate) {
     frequency = hz;
-    tickInc = (2 * M_PI) / ((1 / hz) * sampleRate);
+    tickInc = twoPi / ((1 / hz) * sampleRate);
     std::cout << "Oscillator frequency set to " << hz << "hz @ " << sampleRate << ". Each tick will increment the phase by " << tickInc << std::endl;
   }
   else {

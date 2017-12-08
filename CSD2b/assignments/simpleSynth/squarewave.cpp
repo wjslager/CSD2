@@ -4,10 +4,12 @@
 
 SquareWave::SquareWave() : Oscillator()
 {
+  // std::cout << "Squarewave constructor" << std::endl;
 }
 
 SquareWave::~SquareWave()
 {
+  // std::cout << "Squarewave deconstructor" << std::endl;
 }
 
 double SquareWave::getSample()

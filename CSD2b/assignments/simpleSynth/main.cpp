@@ -9,13 +9,18 @@ float samples[256];
 
 int main(int argc, char *argv[])
 {
-  SimpleSynth testSine;
+  SimpleSynth testSynth;
+  testSynth.setGain(1);
+  testSynth.process(samples);
 
-  testSine.process(samples);
-
+  // Print the audio
   for (int i=0; i<256; i++) {
     std::cout << samples[i] << std::endl;
   }
+
+  testSynth.setWave(1);
+
+  
 
   /*
   // Declare oscillators
