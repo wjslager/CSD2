@@ -6,7 +6,7 @@ Pitched::Pitched(std::string sound, int minPitch, int maxPitch) : Instrument(sou
 {
   this->minPitch = minPitch;
   this->maxPitch = maxPitch;
-  std::cout << " --> Type: Pitched. Range: " << minPitch << " to " << maxPitch << std::endl;
+  std::cout << " --> Type: Pitched. Range: " << minPitch << " to " << maxPitch << std::endl << std::endl;
 }
 
 void Pitched::changeArticulation(std::string articulation)

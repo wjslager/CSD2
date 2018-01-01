@@ -23,4 +23,6 @@ int main(int argc, char *argv[])
   piano.note(45);
   toeter.note(45);
   piano.note(45);
+  piano.changeArticulation("PPP");
+  piano.note(20);
 }

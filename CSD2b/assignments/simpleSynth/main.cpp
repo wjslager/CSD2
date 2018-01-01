@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
   SimpleSynth test(48000);
   test.setGain(1);
-  test.setFrequency(20000);
+  test.setFrequency(2000);
   test.process(samples);
 
   // Print the audio
@@ -21,7 +21,9 @@ int main(int argc, char *argv[])
   }
 
   test.setWave(1);
-  test.setFrequency(10000);
+  test.setFrequency(24500); // is above the nyquist so it will not change the frequency
+  test.setFrequency(8000);
+  test.setGain(0.5);
   test.process(samples);
 
   // Print the audio
@@ -47,4 +49,7 @@ int main(int argc, char *argv[])
     sqr.tick();
   }
   */
+
+  // std::cout << "lattteerrr" << std::endl;
+  return 0;
 }

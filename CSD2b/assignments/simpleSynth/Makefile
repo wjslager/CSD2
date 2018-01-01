@@ -1,22 +1,24 @@
-# Link
-main.exe: main.o synth.o simplesynth.o oscillator.o sinewave.o squarewave.o
-	g++ -o main.exe main.o synth.o simplesynth.o oscillator.o sinewave.o squarewave.o 
+CC = g++
 
-# Compile
+# ==== ==== Link ==== ==== #
+main.exe: main.o synth.o simplesynth.o oscillator.o sinewave.o squarewave.o
+	$(CC) -o main.exe main.o synth.o simplesynth.o oscillator.o sinewave.o squarewave.o
+
+# ==== ==== Compile ==== ==== #
 main.o: main.cpp
-	g++ -c main.cpp
+	$(CC) -c main.cpp
 
 synth.o: synth.cpp synth.h
-	g++ -c synth.cpp
+	$(CC) -c synth.cpp
 
 simplesynth.o: simplesynth.cpp simplesynth.h
-	g++ -c simplesynth.cpp
+	$(CC) -c simplesynth.cpp
 
 oscillator.o: oscillator.cpp oscillator.h
-	g++ -c oscillator.cpp
+	$(CC) -c oscillator.cpp
 
 sinewave.o: sinewave.cpp sinewave.h
-	g++ -c sinewave.cpp
+	$(CC) -c sinewave.cpp
 
 squarewave.o: squarewave.cpp squarewave.h
-	g++ -c squarewave.cpp
+	$(CC) -c squarewave.cpp

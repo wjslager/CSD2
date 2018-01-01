@@ -10,7 +10,6 @@ SimpleSynth::SimpleSynth(float sampleRate) : Synth(sampleRate)
   // Defaults to sinewave with a gain of 1
   osc = &sine;
   gain = 1;
-  osc->setFrequency(20, sampleRate);
 }
 
 SimpleSynth::~SimpleSynth()
@@ -26,23 +25,27 @@ void SimpleSynth::setFrequency(float newFrequency)
 
 void SimpleSynth::setWave(int newWave)
 {
+  // Point osc to the right class instance
   switch (newWave) {
     case 0 :
       osc = &sine;
-      osc->setFrequency(20, 48000);
       break;
     case 1 :
       osc = &sqr;
-      osc->setFrequency(20, 48000);
       break;
     default :
       std::cout << "setWave choice not valid" << std::endl;
   }
+
+  // Reset the frequency after each change of wave
+  // to make sure the current oscillator is up-to-date
+  osc->setFrequency(frequency, sampleRate);
 }
 
 
 void SimpleSynth::process(float *outputBufferRef)
 {
+  // Calculate 256 samples and apply gain
   for (int i=0; i<256; i++) {
     outputBufferRef[i] = osc->getSample() * gain;
     osc->tick();
