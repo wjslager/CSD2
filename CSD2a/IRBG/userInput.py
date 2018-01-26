@@ -1,10 +1,10 @@
 import sys
 import time
 import os
-from colorama import deinit, Fore, Back, Style
 
 # Error Color
-erc = "\033[31m"
+colorErr = "\033[31m"
+reset = "\033[0m"
 
 # Print startup overview
 def titleText():
@@ -12,6 +12,7 @@ def titleText():
     print("\033[96m"+"_ ____ ____ ____ ____ _  _ _    ____ ____    ___  ____ ____ ___    ____ ____ _  _ ____ ____ ____ ___ ____ ____ \n| |__/ |__/ |___ | __ |  | |    |__| |__/    |__] |___ |__|  |     | __ |___ |\ | |___ |__/ |__|  |  |  | |__/ \n| |  \ |  \ |___ |__] |__| |___ |  | |  \    |__] |___ |  |  |     |__] |___ | \| |___ |  \ |  |  |  |__| |  \ \n")
     print("By Ward Slager, 2017\nType help for an overview of all commands\n")
     # print("_ _ _ ____ ____ ___     ____ _    ____ ____ ____ ____ \n| | | |__| |__/ |  \    [__  |    |__| | __ |___ |__/ \n|_|_| |  | |  \ |__/    ___] |___ |  | |__] |___ |  \ \n")
+    print(reset)
 
 # Function which asks and then evaluates input in a specified range
 def askInput(low, high):
@@ -23,7 +24,7 @@ def askInput(low, high):
             return int(inputValue)
         else:
             # Try again
-            print(erc+"Invalid input. Must be an integer ranging from", low, "to", high)
+            print(colorErr+"Invalid input. Must be an integer ranging from", low, "to", high, reset)
             inputValue = input("> ")
 
 # Funtion which evaluates given input in a specified range
@@ -31,7 +32,7 @@ def checkInput(inputValue, currentVAL, low, high):
     if inputValue.isdigit() and high >= int(inputValue) >= low:
         return int(inputValue)
     else:
-       print(erc+"Invalid input. Must be an integer ranging from", low, "to", high)
+       print(colorErr+"Invalid input. Must be an integer ranging from", low, "to", high, reset)
        return currentVAL
 
 # Function which asks and then evaluates input looking for specific values
@@ -44,7 +45,7 @@ def askInputOr(valA, valB):
           return int(inputValue)
       else:
           # Try again
-          print(erc+"Invalid input. Must be an integer:", valA, "or", valB)
+          print(colorErr+"Invalid input. Must be an integer:", valA, "or", valB, reset)
           inputValue = input("> ")
 
 # Funtion which evaluates given input looking for specific values
@@ -52,7 +53,7 @@ def checkInputOr(inputValue, currentVAL, valA, valB):
     if inputValue.isdigit() and int(inputValue) == valA or int(inputValue) == valB:
         return int(inputValue)
     else:
-       print(erc+"Invalid input. Must be an integer:", valA, "or", valB)
+       print(colorErr+"Invalid input. Must be an integer:", valA, "or", valB, reset)
        return currentVAL
 
 # Print command overview
@@ -77,10 +78,7 @@ def helpFile():
 
 # Exits the program
 def exitProgram():
-    # Exit colorama
-    deinit()
-
-    # clearConsole()
+    clearConsole()
     # titleText()
     # ufo()
 
@@ -99,7 +97,6 @@ def clearConsole():
     os.system('clear')
     if os.name=='nt':
         os.system('cls')
-
 
 def ufo():
     print("SURRENDER EARTHLINGS!")
