@@ -1,4 +1,5 @@
 import random
+import colors as col
 
 printInfo = False
 
@@ -24,7 +25,7 @@ def generate(timeBeats, timeQuarter):
     random.shuffle(impBeats)
 
     if printInfo:
-        print("\n_\tDivided measure into prioritized hits:", impBeats)
+        print(col.info + "\n_\tDivided measure into prioritized hits:", impBeats + col.reset)
 
     # Assing the impBeats to the kick or the snare
     assignImportant(timeBeats)
@@ -90,7 +91,7 @@ def assignImportant(timeBeats):
             seq0[i] = 2
 
     if printInfo:
-        print("Kick  ", seq0, "\nSnare ", seq1, "\nHihats", seq2, "\n")
+        print(col.info + "Kick  ", seq0, "\nSnare ", seq1, "\nHihats", seq2, "\n" + reset)
 
 def findImportantBeats(timeBeats):
     global impBeats
@@ -121,7 +122,7 @@ def findImportantBeats(timeBeats):
         options = [[3,3,3,3], [4,4,4], [4,3,3,2]]
         impBeats = options[random.randint(0,2)]
     else:
-        print("Error. Something went wrong with findImportantBeats(), timeBeats might be out of range")
+        print(col.error + "Error. Something went wrong with findImportantBeats(), timeBeats might be out of range" + col.reset)
 
 def relToAbs(listIn):
     listIn.insert(0, 0)

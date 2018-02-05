@@ -1,5 +1,6 @@
 from midiutil.MidiFile import MIDIFile
 from midiutil import MIDIFile
+import colors as col
 
 # http://midiutil.readthedocs.io/en/stable/
 # https://pypi.python.org/pypi/MIDIUtil/.
@@ -60,4 +61,4 @@ def writeMidi(sequences, filename, bpm, timeQuarter, timeBeats):
     with open(filename+".mid", "wb") as output_file:
         MyMIDI.writeFile(output_file)
 
-    print(" midi written to", filename+".mid\n")
+    print(col.info + " midi written to", filename+".mid\n" + col.reset)

@@ -1,18 +1,15 @@
 import sys
 import time
 import os
-
-# Error Color
-colorErr = "\033[31m"
-reset = "\033[0m"
+import colors as col
+import platform
 
 # Print startup overview
 def titleText():
     clearConsole()
-    print("\033[96m"+"_ ____ ____ ____ ____ _  _ _    ____ ____    ___  ____ ____ ___    ____ ____ _  _ ____ ____ ____ ___ ____ ____ \n| |__/ |__/ |___ | __ |  | |    |__| |__/    |__] |___ |__|  |     | __ |___ |\ | |___ |__/ |__|  |  |  | |__/ \n| |  \ |  \ |___ |__] |__| |___ |  | |  \    |__] |___ |  |  |     |__] |___ | \| |___ |  \ |  |  |  |__| |  \ \n")
-    print("By Ward Slager, 2017\nType help for an overview of all commands\n")
-    # print("_ _ _ ____ ____ ___     ____ _    ____ ____ ____ ____ \n| | | |__| |__/ |  \    [__  |    |__| | __ |___ |__/ \n|_|_| |  | |  \ |__/    ___] |___ |  | |__] |___ |  \ \n")
-    print(reset)
+    print(col.header+"IrRegular Beat Generator\n")
+    print(col.info+"By Ward Slager, 2018\nType help for an overview of all commands\n")
+    print(col.reset)
 
 # Function which asks and then evaluates input in a specified range
 def askInput(low, high):
@@ -24,7 +21,7 @@ def askInput(low, high):
             return int(inputValue)
         else:
             # Try again
-            print(colorErr+"Invalid input. Must be an integer ranging from", low, "to", high, reset)
+            print(col.error+"Invalid input. Must be an integer ranging from", low, "to", high, col.reset)
             inputValue = input("> ")
 
 # Funtion which evaluates given input in a specified range
@@ -32,7 +29,7 @@ def checkInput(inputValue, currentVAL, low, high):
     if inputValue.isdigit() and high >= int(inputValue) >= low:
         return int(inputValue)
     else:
-       print(colorErr+"Invalid input. Must be an integer ranging from", low, "to", high, reset)
+       print(col.error+"Invalid input. Must be an integer ranging from", low, "to", high, col.reset)
        return currentVAL
 
 # Function which asks and then evaluates input looking for specific values
@@ -45,7 +42,7 @@ def askInputOr(valA, valB):
           return int(inputValue)
       else:
           # Try again
-          print(colorErr+"Invalid input. Must be an integer:", valA, "or", valB, reset)
+          print(col.error+"Invalid input. Must be an integer:", valA, "or", valB, col.reset)
           inputValue = input("> ")
 
 # Funtion which evaluates given input looking for specific values
@@ -53,7 +50,7 @@ def checkInputOr(inputValue, currentVAL, valA, valB):
     if inputValue.isdigit() and int(inputValue) == valA or int(inputValue) == valB:
         return int(inputValue)
     else:
-       print(colorErr+"Invalid input. Must be an integer:", valA, "or", valB, reset)
+       print(col.error+"Invalid input. Must be an integer:", valA, "or", valB, col.reset)
        return currentVAL
 
 # Print command overview
@@ -79,8 +76,6 @@ def helpFile():
 # Exits the program
 def exitProgram():
     clearConsole()
-    # titleText()
-    # ufo()
 
     # Print my nice snaredrum logo
     file = open("snaredrum.txt", "r")
@@ -89,42 +84,5 @@ def exitProgram():
     sys.exit()
 
 def clearConsole():
-    # Try to clear using clear, and then cls on windows systems
-    # This is done because when using cygwin (or other emulators)
-    # os.name=='nt' will return true while it still does not react cls
-    # By using clear first and then cls on windows systems this
-    # sort of fixes the problem
     os.system('clear')
-    if os.name=='nt':
-        os.system('cls')
-
-def ufo():
-    print("SURRENDER EARTHLINGS!")
-    time.sleep(0.5)
-    print("YOU WILL NOT ESCAPE YOUR FATE!")
-    time.sleep(0.5)
-    print("       _______")
-    print("      / O O O \ ")
-    print("      \_______/ ")
-    time.sleep(0.1)
-    print("          .")
-    time.sleep(0.05)
-    print("         ...")
-    time.sleep(0.05)
-    print("        .....")
-    time.sleep(0.05)
-    print("       . ... .")
-    time.sleep(0.05)
-    print("      . . . . .")
-    time.sleep(0.05)
-    print("     . .  .  . .")
-    time.sleep(0.05)
-    print("    . . . . . . .")
-    time.sleep(0.05)
-    print("   . . .  .  . . .")
-    time.sleep(0.05)
-    print("  . . . . . . . . .")
-    time.sleep(0.05)
-    print(" . . . .  .  . . . .")
-    time.sleep(0.05)
-    print(". . . . . . . . . . .")
+    os.system('cls')

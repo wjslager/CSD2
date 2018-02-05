@@ -2,6 +2,7 @@ import time
 import simpleaudio as sa
 import beatGenerator as bgen
 import random
+import colors as col
 
 timingPrint = False
 
@@ -57,7 +58,7 @@ def initPlayback(bpm, printInfo=False):
 
     # Only prints info if specifically asked for (i.e. when debugging)
     if printInfo:
-        print("Initializing playback \n- A measure has", timeBeats, "triggers\n- A single trigger takes", int(1000*triggerLength), "ms\n-", timeQuarter, "triggers per quarter note\n")
+        print(col.info + "Initializing playback \n- A measure has", timeBeats, "triggers\n- A single trigger takes", int(1000*triggerLength), "ms\n-", timeQuarter, "triggers per quarter note\n" + col.reset)
 
     playbackStart = time.time()
     playback = True
