@@ -8,11 +8,11 @@
 class SimpleSynth : public Synth
 {
 public:
-  SimpleSynth(float sampleRate);
-  virtual ~SimpleSynth(); // waarom moet deze virtual??? <<<<<<<<<<<
-  void setFrequency(float newFrequency);
+  SimpleSynth();
+  virtual ~SimpleSynth();
+  void setFrequency(float newFrequency, int newSamplerate);
   void setWave(int newWave);
-  void process(float *outputBufferRef);
+  void process(float *outputBufferRef, int frames);
 private:
   Oscillator* osc;
   SineWave sine;

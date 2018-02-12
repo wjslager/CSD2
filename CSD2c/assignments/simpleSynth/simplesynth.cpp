@@ -5,7 +5,7 @@
 #include "dsp/sinewave.h"
 #include "dsp/squarewave.h"
 
-SimpleSynth::SimpleSynth(float sampleRate) : Synth(sampleRate)
+SimpleSynth::SimpleSynth() : Synth()
 {
   // Defaults to sinewave with a gain of 1
   osc = &sine;
@@ -13,13 +13,12 @@ SimpleSynth::SimpleSynth(float sampleRate) : Synth(sampleRate)
 }
 
 SimpleSynth::~SimpleSynth()
-{
-  // std::cout << "Simplesynth deconstructor" << std::endl;
-}
+{}
 
-void SimpleSynth::setFrequency(float newFrequency)
+void SimpleSynth::setFrequency(float newFrequency, int newSamplerate)
 {
   frequency = newFrequency;
+  sampleRate = newSamplerate;
   osc->setFrequency(frequency, sampleRate);
 }
 
@@ -42,11 +41,9 @@ void SimpleSynth::setWave(int newWave)
   osc->setFrequency(frequency, sampleRate);
 }
 
-
-void SimpleSynth::process(float *outputBufferRef)
+void SimpleSynth::process(float *outputBufferRef, int frames)
 {
-  // Calculate 256 samples and apply gain
-  for (int i=0; i<256; i++) {
+  for (int i=0; i<frames; i++) {
     outputBufferRef[i] = osc->getSample() * gain;
     osc->tick();
   }

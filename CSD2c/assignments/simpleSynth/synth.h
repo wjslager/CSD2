@@ -4,7 +4,7 @@
 class Synth
 {
 public:
-  Synth(float sampleRate);
+  Synth();
   ~Synth();
   void setGain(float gain);
 protected:

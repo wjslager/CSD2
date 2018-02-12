@@ -36,7 +36,7 @@ void Oscillator::setFrequency(float hz, int sampleRate)
   */
   if (hz < 0.5 * sampleRate) {
     frequency = hz;
-    tickInc = twoPi / ((1 / hz) * sampleRate);
+    tickInc = PI_2 / ((1 / hz) * sampleRate);
     std::cout << "Oscillator frequency set to " << hz << "hz @ " << sampleRate << ". Each tick will increment the phase by " << tickInc << std::endl;
   }
   else {
@@ -48,5 +48,6 @@ void Oscillator::tick()
 {
   // fmod is % for floats and doubles
   // wraps the phase around at twoPi to make sure the squarewave works
-  phase = fmod((phase + tickInc), twoPi);
+  // for more than one cycle
+  phase = fmod((phase + tickInc), PI_2);
 }

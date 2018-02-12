@@ -1,10 +1,10 @@
 #include <iostream>
 #include "synth.h"
 
-Synth::Synth(float sampleRate)
+Synth::Synth()
 {
   // std::cout << "Synth constructor" << std::endl;
-  this->sampleRate = sampleRate;
+  // this->sampleRate = sampleRate;
 }
 
 Synth::~Synth()
