@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 {
   JackModule jack;
   SimpleSynth synth;
+  synth.setFrequency(200, 48000);
+  synth.setGain(0.01);
 
   // DSP definition
   jack.onProcess = [&](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate) {
