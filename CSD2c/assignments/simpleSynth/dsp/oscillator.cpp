@@ -37,10 +37,10 @@ void Oscillator::setFrequency(float hz, int sampleRate)
   if (hz < 0.5 * sampleRate) {
     frequency = hz;
     tickInc = PI_2 / ((1 / hz) * sampleRate);
-    std::cout << "Oscillator frequency set to " << hz << "hz @ " << sampleRate << ". Each tick will increment the phase by " << tickInc << std::endl;
+    std::cout << "(osc) Frequency set to " << hz << "hz @ " << sampleRate << ". Tick set to " << tickInc << std::endl;
   }
   else {
-    std::cout << "! Oscillator frequency cannot be set above the nyquist frequency (" << hz << "hz > " << 0.5 * sampleRate << "hz)" << std::endl;
+    std::cout << "(osc) ! Oscillator frequency cannot be set above the nyquist frequency (" << hz << "hz > " << 0.5 * sampleRate << "hz)" << std::endl;
   }
 }
 

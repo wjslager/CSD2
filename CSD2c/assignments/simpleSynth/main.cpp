@@ -4,30 +4,39 @@
 #include "jack_module.h"
 #include "synth.h"
 #include "simplesynth.h"
-// #include "dsp/oscillator.h"
-// #include "dsp/sinewave.h"
-// #include "dsp/squarewave.h"
+#include "escolors.h"
 
 int main(int argc, char *argv[])
 {
   JackModule jack;
   SimpleSynth synth;
-  synth.setFrequency(200, 48000);
-  synth.setGain(0.01);
 
-  // DSP definition
-  jack.onProcess = [&](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate) {
+  // Init Jack and retrieve the samplerate from the server
+  jack.init("C++ project");
+  float samplerate = jack.getSamplerate();
+  std::cout << etxt::green << etxt::b << "\nConnected to Jack\n" << etxt::reset << std::endl;
+
+  // DSP process definition
+  jack.onProcess = [&synth](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate)
+  {
     synth.process(outBuf, nframes);
     return 0;
   };
 
-  // Jack connection
-  jack.init("C++ project");
-  jack.autoConnect();
-  std::cout << "\033[0;32m\nConnected to Jack succesfully\033[0m\n" << std::endl;
+  // Initiaze DSP stuff now that we now the samplerate of Jack
+  std::cout << "========" << std::endl;
+  synth.setSamplerate(samplerate);
+  synth.setFrequency(440);
+  synth.setWave(1);
+  synth.setGain(0.1);
+  std::cout << "========" << std::endl;
 
-  // Commandline input
-  std::cout << "Press 'q' when you want to quit the program." << std::endl;
+  // Ask Jack to connect our audio output to the system output
+  jack.autoConnect();
+
+  // Wait for commanline output while Jack renders our audio
+  std::cout << "\nPress 'q' when you want to quit the program." << std::endl;
+
   bool running = true;
   while (running)
   {
@@ -38,28 +47,6 @@ int main(int argc, char *argv[])
       break;
     }
   }
+
   return 0;
 }
-
-/*
-SimpleSynth test(48000);
-test.setGain(1);
-test.setFrequency(2000);
-test.process(samples);
-
-// Print the audio
-for (int i=0; i<256; i++) {
-  std::cout << samples[i] << std::endl;
-}
-
-test.setWave(1);
-test.setFrequency(24500); // is above the nyquist so it will not change the frequency
-test.setFrequency(8000);
-test.setGain(0.5);
-test.process(samples);
-
-// Print the audio
-for (int i=0; i<256; i++) {
-  std::cout << samples[i] << std::endl;
-}
-*/

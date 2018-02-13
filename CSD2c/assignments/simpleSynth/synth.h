@@ -7,10 +7,11 @@ public:
   Synth();
   ~Synth();
   void setGain(float gain);
+  void setSamplerate(float samplerate);
 protected:
   float frequency;
   float gain;
-  float sampleRate;
+  float samplerate;
 };
 
 #endif

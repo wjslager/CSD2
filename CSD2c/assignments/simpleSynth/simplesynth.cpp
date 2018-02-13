@@ -15,17 +15,16 @@ SimpleSynth::SimpleSynth() : Synth()
 SimpleSynth::~SimpleSynth()
 {}
 
-void SimpleSynth::setFrequency(float newFrequency, int newSamplerate)
+void SimpleSynth::setFrequency(float frequency)
 {
-  frequency = newFrequency;
-  sampleRate = newSamplerate;
-  osc->setFrequency(frequency, sampleRate);
+  this->frequency = frequency;
+  osc->setFrequency(this->frequency, samplerate);
 }
 
-void SimpleSynth::setWave(int newWave)
+void SimpleSynth::setWave(int waveform)
 {
   // Point osc to the right class instance
-  switch (newWave) {
+  switch (waveform) {
     case 0 :
       osc = &sine;
       break;
@@ -33,12 +32,14 @@ void SimpleSynth::setWave(int newWave)
       osc = &sqr;
       break;
     default :
-      std::cout << "setWave choice not valid" << std::endl;
+      std::cout << "(simplesynth) setWave choice not valid" << std::endl;
+      return;
   }
+  std::cout << "(simplesynth) setWave to " << waveform << ". Will now call setFrequency to be sure" << std::endl;
 
   // Reset the frequency after each change of wave
   // to make sure the current oscillator is up-to-date
-  osc->setFrequency(frequency, sampleRate);
+  osc->setFrequency(frequency, samplerate);
 }
 
 void SimpleSynth::process(float *outputBufferRef, int frames)

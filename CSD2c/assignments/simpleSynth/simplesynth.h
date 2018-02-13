@@ -10,8 +10,8 @@ class SimpleSynth : public Synth
 public:
   SimpleSynth();
   virtual ~SimpleSynth();
-  void setFrequency(float newFrequency, int newSamplerate);
-  void setWave(int newWave);
+  void setFrequency(float frequency);
+  void setWave(int waveform);
   void process(float *outputBufferRef, int frames);
 private:
   Oscillator* osc;
