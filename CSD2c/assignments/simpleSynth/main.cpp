@@ -24,27 +24,30 @@ int main(int argc, char *argv[])
   };
 
   // Initiaze DSP stuff now that we now the samplerate of Jack
-  std::cout << "========" << std::endl;
   synth.setSamplerate(samplerate);
   synth.setFrequency(440);
-  synth.setWave(1);
-  synth.setGain(0.1);
-  std::cout << "========" << std::endl;
+  synth.setWave(2);
+  synth.setGain(0.5);
 
   // Ask Jack to connect our audio output to the system output
   jack.autoConnect();
 
   // Wait for commanline output while Jack renders our audio
-  std::cout << "\nPress 'q' when you want to quit the program." << std::endl;
+  std::cout << "\nControls:\n'q' to quit\n'w' to switch wave" << std::endl;
 
   bool running = true;
+  int wave = 0;
   while (running)
   {
     switch (std::cin.get())
     {
       case 'q':
-      running = false;
-      break;
+        running = false;
+        break;
+      case 'w':
+        wave = (wave + 1) % 3;
+        synth.setWave(wave);
+        break;
     }
   }
 

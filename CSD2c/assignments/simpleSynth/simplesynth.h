@@ -3,6 +3,7 @@
 
 #include "dsp/sinewave.h"
 #include "dsp/squarewave.h"
+#include "dsp/sawtooth.h"
 #include "synth.h"
 
 class SimpleSynth : public Synth
@@ -12,11 +13,12 @@ public:
   virtual ~SimpleSynth();
   void setFrequency(float frequency);
   void setWave(int waveform);
-  void process(float *outputBufferRef, int frames);
+  void process(float *sampleBuf, int frames);
 private:
   Oscillator* osc;
   SineWave sine;
   SquareWave sqr;
+  Sawtooth saw;
 };
 
 #endif

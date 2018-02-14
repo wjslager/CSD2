@@ -4,6 +4,7 @@
 #include "dsp/oscillator.h"
 #include "dsp/sinewave.h"
 #include "dsp/squarewave.h"
+#include "dsp/sawtooth.h"
 
 SimpleSynth::SimpleSynth() : Synth()
 {
@@ -31,6 +32,9 @@ void SimpleSynth::setWave(int waveform)
     case 1 :
       osc = &sqr;
       break;
+    case 2 :
+      osc = &saw;
+      break;
     default :
       std::cout << "(simplesynth) setWave choice not valid" << std::endl;
       return;
@@ -42,10 +46,11 @@ void SimpleSynth::setWave(int waveform)
   osc->setFrequency(frequency, samplerate);
 }
 
-void SimpleSynth::process(float *outputBufferRef, int frames)
+void SimpleSynth::process(float *sampleBuf, int frames)
 {
-  for (int i=0; i<frames; i++) {
-    outputBufferRef[i] = osc->getSample() * gain;
+  for (int i=0; i<frames; i++)
+  {
+    sampleBuf[i] = osc->getSample() * gain;
     osc->tick();
   }
 }
