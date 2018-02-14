@@ -9,6 +9,7 @@ public:
   Sawtooth();
   ~Sawtooth();
   double getSample();
+protected:
 };
 
 #endif

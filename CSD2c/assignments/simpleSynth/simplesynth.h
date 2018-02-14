@@ -4,6 +4,7 @@
 #include "dsp/sinewave.h"
 #include "dsp/squarewave.h"
 #include "dsp/sawtooth.h"
+#include "dsp/phasor.h"
 #include "synth.h"
 
 class SimpleSynth : public Synth

@@ -42,8 +42,7 @@ int JackModule::init(std::string clientName)
   //JackNoStartServer -> Do not automatically start the JACK server when it is not already running
   client = jack_client_open(clientName.c_str(),JackNoStartServer,NULL);
   if( client == 0) {
-    std::cout <<  "Unable to retrieve a JACK client. \n " <<
-                  "Is the JACK server running?" << std::endl;
+    std::cout <<  "Unable to retrieve a JACK client." << std::endl;
     return 1;
   }
 

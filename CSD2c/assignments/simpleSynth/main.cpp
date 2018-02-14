@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
   SimpleSynth synth;
 
   // Init Jack and retrieve the samplerate from the server
-  jack.init("C++ project");
+  if (jack.init("C++ project") == 1) return 1;
   float samplerate = jack.getSamplerate();
   std::cout << etxt::green << etxt::b << "\nConnected to Jack\n" << etxt::reset << std::endl;
 
@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 
   // Initiaze DSP stuff now that we now the samplerate of Jack
   synth.setSamplerate(samplerate);
-  synth.setFrequency(440);
-  synth.setWave(2);
+  synth.setFrequency(120);
+  // synth.setWave();
   synth.setGain(0.5);
 
   // Ask Jack to connect our audio output to the system output

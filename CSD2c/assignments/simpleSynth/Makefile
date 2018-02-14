@@ -5,8 +5,8 @@ APPNAME= example
 
 all: $(APPNAME)
 
-$(APPNAME): jack_module.o main.o synth.o simplesynth.o dsp/oscillator.o dsp/sinewave.o dsp/squarewave.o dsp/sawtooth.o
-	$(CC) -o $@ $(CFLAGS) jack_module.o main.o synth.o simplesynth.o oscillator.o sinewave.o squarewave.o sawtooth.o $(LDFLAGS)
+$(APPNAME): jack_module.o main.o synth.o simplesynth.o dsp/oscillator.o dsp/sinewave.o dsp/squarewave.o dsp/phasor.o dsp/attackdecay.o
+	$(CC) -o $@ $(CFLAGS) jack_module.o main.o synth.o simplesynth.o oscillator.o sinewave.o squarewave.o phasor.o attackdecay.o $(LDFLAGS)
 
 .cpp.o:
 	$(CC) -c $< $(CFLAGS)

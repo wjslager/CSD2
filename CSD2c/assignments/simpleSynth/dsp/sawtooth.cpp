@@ -1,19 +1,18 @@
-#include <cmath>
 #include <iostream>
 #include "sawtooth.h"
 #include "oscillator.h"
 
 Sawtooth::Sawtooth() : Oscillator()
 {
-  // std::cout << "Sinewave constructor" << std::endl;
+  // std::cout << "Sawtooth constructor" << std::endl;
 }
 
 Sawtooth::~Sawtooth()
 {
-  // std::cout << "Sinewave deconstructor" << std::endl;
+  // std::cout << "Sawtooth deconstructor" << std::endl;
 }
 
 double Sawtooth::getSample()
 {
-  return phase / PI_2;
+  return -2 * (phase / PI_2) + 1;
 }

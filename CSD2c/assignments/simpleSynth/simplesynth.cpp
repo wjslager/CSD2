@@ -4,7 +4,7 @@
 #include "dsp/oscillator.h"
 #include "dsp/sinewave.h"
 #include "dsp/squarewave.h"
-#include "dsp/sawtooth.h"
+#include "dsp/phasor.h"
 
 SimpleSynth::SimpleSynth() : Synth()
 {
