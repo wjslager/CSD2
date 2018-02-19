@@ -1,0 +1,49 @@
+#include <cmath>
+#include <iostream>
+#include <thread>
+#include "jack_module.h"
+#include "synth.h"
+#include "fmsynth.h"
+#include "escolors.h"
+
+int main(int argc, char *argv[])
+{
+  JackModule jack;
+  FMSynth synth;
+
+  // Init Jack and retrieve the samplerate from the server
+  if (jack.init("C++ project") == 1) return 1;
+  float samplerate = jack.getSamplerate();
+  std::cout << etxt::green << etxt::b << "\nConnected to Jack\n" << etxt::reset << std::endl;
+  synth.setSamplerate(samplerate);
+
+  // DSP process definition
+  jack.onProcess = [&synth](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate)
+  {
+    synth.process(outBuf, nframes);
+    return 0;
+  };
+
+  // Initiaze DSP stuff now that we now the samplerate of Jack
+  synth.noteOn(60);
+  synth.setGain(0.5);
+
+  // Ask Jack to connect our audio output to the system output
+  jack.autoConnect();
+
+  // Wait for commanline output while Jack renders our audio
+  std::cout << "\nControls:\n'q' to quit" << std::endl;
+
+  bool running = true;
+  while (running)
+  {
+    switch (std::cin.get())
+    {
+      case 'q':
+        running = false;
+        break;
+    }
+  }
+
+  return 0;
+}
