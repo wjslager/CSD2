@@ -27,7 +27,12 @@ int main(int argc, char *argv[])
   synth.setSamplerate(samplerate);
   synth.setFrequency(120);
   // synth.setWave();
-  synth.setGain(0.5);
+  if (argc > 1) {
+    synth.setGain(atof(argv[1]));
+    std::cout << "Master volume set to " << atof(argv[1]) << std::endl;
+  } else {
+    synth.setGain(0.5);
+  }
 
   // Ask Jack to connect our audio output to the system output
   jack.autoConnect();
