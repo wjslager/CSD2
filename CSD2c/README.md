@@ -59,7 +59,7 @@
 - Envelope
   - Line function as seen in Pd/Max
     ```cpp
-    line(float destination, float frames)
+    line(float destination, float frames);
     ```
   - Uses the getSample() and tick() functionality in a similar way as the oscillators
 - AD / ADSR
