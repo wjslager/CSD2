@@ -46,20 +46,21 @@
   - Variables:
     - amplitude
     - frequency
-  - Process function:
-  ```cpp
-  outBuf[i] = modulator.getSample();
-  // Apply exponential fm
-  carrier.setFrequency(mtof(midi + (outBuf[i] * fmIndex * fmEnv.getSample())));
-  outBuf[i] = carrier.getSample() * amplitude;
-  modulator.tick();
-  fmEnv.tick();
-  carrier.tick();
-  ```
+  - Process function
+    ```cpp
+    outBuf[i] = modulator.getSample();
+    // Apply exponential fm
+    carrier.setFrequency(mtof(midi + (outBuf[i] * fmIndex * fmEnv.getSample())));
+    outBuf[i] = carrier.getSample() * amplitude;
+    modulator.tick();
+    fmEnv.tick();
+    carrier.tick();
+    ```
 - Envelope
   - Line function as seen in Pd/Max
     ```cpp
     line(float destination, float frames)
     ```
+  - Uses the getSample() and tick() functionality in a similar way as the oscillators
 - AD / ADSR
-  - Calls the line() function twice, once for the attack stage, once for the release stage
+  - Process function calls the line() function for each stage of the envelope
