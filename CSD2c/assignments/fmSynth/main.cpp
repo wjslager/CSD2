@@ -4,7 +4,7 @@
 #include "jack_module.h"
 #include "synth.h"
 #include "fmsynth.h"
-#include "escolors.h"
+// #include "escolors.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,8 +14,9 @@ int main(int argc, char *argv[])
   // Init Jack and retrieve the samplerate from the server
   if (jack.init("C++ project") == 1) return 1;
   float samplerate = jack.getSamplerate();
-  std::cout << etxt::green << etxt::b << "\nConnected to Jack\n" << etxt::reset << std::endl;
+  std::cout << std::endl;
   synth.setSamplerate(samplerate);
+  std::cout << "(main) Connected to Jack" << std::endl;
 
   // DSP process definition
   jack.onProcess = [&synth](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate)
@@ -25,14 +26,14 @@ int main(int argc, char *argv[])
   };
 
   // Initiaze DSP stuff now that we now the samplerate of Jack
-  synth.noteOn(60);
+  synth.noteOn(30);
   synth.setGain(0.5);
 
   // Ask Jack to connect our audio output to the system output
   jack.autoConnect();
 
   // Wait for commanline output while Jack renders our audio
-  std::cout << "\nControls:\n'q' to quit" << std::endl;
+  std::cout << "\nControls:\n'q' to quit\n'n' to randomize note and parameters\n'p' to randomize parameters" << std::endl;
 
   bool running = true;
   while (running)
@@ -42,6 +43,16 @@ int main(int argc, char *argv[])
       case 'q':
         running = false;
         break;
+      case 'n':
+        synth.noteOn(30 + (rand() % 36));
+        // break;
+      case 'p':
+        synth.fmIndex = rand() % 5000;
+        synth.modRatio = rand() % 32;
+        synth.carRatio = rand() % 32;
+        std::cout << "(main) Randomized note. fmIndex: " << synth.fmIndex << " modulator ratio: " << synth.modRatio << " carrier ratio: " << synth.carRatio << std::endl;
+        break;
+
     }
   }
 

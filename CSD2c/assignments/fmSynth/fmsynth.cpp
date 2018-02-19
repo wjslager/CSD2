@@ -7,8 +7,8 @@
 
 FMSynth::FMSynth() : Synth()
 {
-  carrier = &sine1;
-  modulator = &sine2;
+  car = &sine1;
+  mod = &sine2;
   gain = 1;
 }
 
@@ -18,8 +18,8 @@ FMSynth::~FMSynth()
 void FMSynth::setFrequency(float frequency)
 {
   this->frequency = frequency;
-  carrier->setFrequency(this->frequency, samplerate);
-  modulator->setFrequency(this->frequency, samplerate);
+  car->setFrequency(this->frequency, samplerate);
+  mod->setFrequency(this->frequency, samplerate);
 }
 
 void FMSynth::noteOn(float midi)
@@ -33,10 +33,11 @@ void FMSynth::process(float *sampleBuf, int frames)
 {
   for (int i=0; i<frames; i++)
   {
-    carrier->setFrequency(mtof(midi) + (modulator->getSample() * fmIndex), samplerate);
-    sampleBuf[i] = carrier->getSample() * gain;
+    sampleBuf[i] = mod->getSample();
+    car->setFrequency(mtof(midi) + (sampleBuf[i] * fmIndex), samplerate);
+    sampleBuf[i] = car->getSample() * gain;
 
-    modulator->tick();
-    carrier->tick();
+    mod->tick();
+    car->tick();
   }
 }

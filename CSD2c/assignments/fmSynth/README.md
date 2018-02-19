@@ -1,9 +1,9 @@
 # CSD2c
 
-- [Project goals](#project goals)
+- [Goals](#goals)
 - [Design](#design)
 
-## Project Goals
+## Goals
 
 #### Minimal
 - FM synthesizer (1 carrier, 1 modulator)
