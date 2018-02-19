@@ -9,7 +9,6 @@ public:
   void setGain(float gain);
   void setSamplerate(float samplerate);
 protected:
-  float midi;
   float frequency;
   float gain;
   float samplerate;

@@ -22,11 +22,10 @@ public:
   void autoConnect();
   void end();
   //the onProcess function that needs to be assigned to a JackModule object
-  std::function <int(jack_default_audio_sample_t *,
-     jack_default_audio_sample_t *, jack_nframes_t, double)> onProcess;
+  std::function <int(jack_default_audio_sample_t *, jack_default_audio_sample_t *, jack_nframes_t, double)> onProcess;
 
 private:
-  static int _wrap_jack_process_cb(jack_nframes_t nframes,void *arg);
+  static int _wrap_jack_process_cb(jack_nframes_t nframes, void *arg);
   jack_client_t *client;
   const char **ports;
 };

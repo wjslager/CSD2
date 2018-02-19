@@ -10,10 +10,10 @@ public:
   FMSynth();
   virtual ~FMSynth();
   void setFrequency(float frequency);
+  void setFrequency();
   void noteOn(float midi);
   void process(float *sampleBuf, int frames);
 
-  // I don't feel like making setFMIndex functions and stuff..
   float fmIndex = 1000;
   float carRatio = 1;
   float modRatio = 1;

@@ -52,10 +52,8 @@ int JackModule::init(std::string clientName)
   jack_set_process_callback(client,_wrap_jack_process_cb,this);
 
   //Create an output and input port for the client.
-  output_port =
-    jack_port_register(client,"output",JACK_DEFAULT_AUDIO_TYPE,JackPortIsOutput,0);
-  input_port =
-    jack_port_register(client,"input",JACK_DEFAULT_AUDIO_TYPE,JackPortIsInput,0);
+  output_port = jack_port_register(client,"output",JACK_DEFAULT_AUDIO_TYPE,JackPortIsOutput,0);
+  input_port = jack_port_register(client,"input",JACK_DEFAULT_AUDIO_TYPE,JackPortIsInput,0);
 
   //Tell the Jack server that the program is ready to start processing audio.
   if(jack_activate(client)) {
@@ -77,11 +75,7 @@ void JackModule::autoConnect()
 {
   //check if a function is assigned to onProcess
   if(!onProcess) {
-    std::cout << "\n_____ EXIT PROGRAM _____\n"
-      << "The onProcess method is unassigned.\n"
-      << "You need to assign a (lambda) function to JackModule::onProcess.\n"
-      << "JackModule.onProcess will be called by the jack callback function.\n"
-      << "________________________\n\n";
+    std::cout << "The onProcess method is unassigned." << std::endl;
     exit(1);
   }
 

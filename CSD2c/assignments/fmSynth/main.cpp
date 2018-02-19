@@ -47,10 +47,11 @@ int main(int argc, char *argv[])
         synth.noteOn(30 + (rand() % 36));
         // break;
       case 'p':
-        synth.fmIndex = rand() % 5000;
+        // synth.fmIndex = rand() % 5000;
         synth.modRatio = rand() % 32;
         synth.carRatio = rand() % 32;
         std::cout << "(main) Randomized note. fmIndex: " << synth.fmIndex << " modulator ratio: " << synth.modRatio << " carrier ratio: " << synth.carRatio << std::endl;
+        synth.setFrequency();
         break;
 
     }
