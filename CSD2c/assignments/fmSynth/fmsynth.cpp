@@ -39,7 +39,9 @@ void FMSynth::noteOn(float midi)
 
 void FMSynth::noteOff()
 {
-
+  // Trigger all envelopes
+  carEnv.noteOff();
+  modEnv.noteOff();
 }
 
 void FMSynth::process(float *sampleBuf, int frames)

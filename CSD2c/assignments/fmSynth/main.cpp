@@ -19,10 +19,6 @@ int main(int argc, char *argv[])
   long unsigned int samplerate = jack.getSamplerate();
   synth.setSamplerate(samplerate);
 
-  // Test stuff
-  synth.noteOn(30);
-  synth.setGain(0.2);
-
   // DSP process definition
   jack.onProcess = [&synth](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate)
   {
@@ -33,6 +29,10 @@ int main(int argc, char *argv[])
   // Ask Jack to connect our audio output to the system output
   jack.autoConnect();
   // All set, let's go!
+
+  // Test stuff
+  synth.noteOn(30);
+  synth.setGain(0.2);
 
   // Wait for commanline output while Jack renders our audio
   std::cout << "\nControls:\n'q' to quit\n'n' to randomize note and parameters\n'p' to randomize parameters" << std::endl;
@@ -47,6 +47,9 @@ int main(int argc, char *argv[])
         break;
       case 'n':
         synth.noteOn(30 + (rand() % 36));
+        break;
+      case 'o':
+        synth.noteOff();
         break;
       case 'p':
         synth.fmIndex = rand() % 10000;

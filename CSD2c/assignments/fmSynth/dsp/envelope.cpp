@@ -22,10 +22,6 @@ void Envelope::line(float start, float end, float frames)
   this->start = start;
 }
 
-double Envelope::getSample()
-{
-  return value;
-}
 
 void Envelope::tick()
 {
