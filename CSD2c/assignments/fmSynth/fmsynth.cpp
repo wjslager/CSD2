@@ -7,6 +7,7 @@
 
 FMSynth::FMSynth() : Synth()
 {
+  // Set both the carrier and the oscillator to a sinewave
   car = &sine1;
   mod = &sine2;
   gain = 1;
@@ -15,17 +16,16 @@ FMSynth::FMSynth() : Synth()
 FMSynth::~FMSynth()
 {}
 
+void FMSynth::setFrequency()
+{
+  setFrequency(frequency);
+}
+
 void FMSynth::setFrequency(float frequency)
 {
   this->frequency = frequency;
   car->setFrequency(this->frequency * carRatio, samplerate);
   mod->setFrequency(this->frequency * modRatio, samplerate);
-}
-
-// Can be used to recalculate frequency values after changing carrier ratios
-void FMSynth::setFrequency()
-{
-  setFrequency(frequency);
 }
 
 void FMSynth::noteOn(float midi)
@@ -40,8 +40,8 @@ void FMSynth::process(float *sampleBuf, int frames)
 {
   for (int i=0; i<frames; i++)
   {
-    sampleBuf[i] = mod->getSample();
-    car->setFrequency((frequency * carRatio) + (sampleBuf[i] * fmIndex), samplerate);
+    // (base frequency * carrier ratio) + (modulator * fmIndex)
+    car->setFrequency((frequency * carRatio) + (mod->getSample() * fmIndex), samplerate);
     sampleBuf[i] = car->getSample() * gain;
 
     mod->tick();
