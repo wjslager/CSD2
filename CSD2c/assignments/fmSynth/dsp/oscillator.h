@@ -2,6 +2,7 @@
 #define _OSCILLATOR_H_
 
 #define PI_2 6.28318530717959
+#define PI 3.141592653589795
 
 class Oscillator
 {
@@ -15,7 +16,7 @@ protected:
   float phase;
   float frequency; // in hz
 private:
-  float tickInc; // value to add to phase for each tick
+  float phaseInc; // value to add to phase for each tick
 };
 
 #endif

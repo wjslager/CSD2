@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 
   // Init Jack and retrieve the samplerate from the server
   if (jack.init("C++ project") == 1) return 1;
-  float samplerate = jack.getSamplerate();
-  std::cout << std::endl;
+  unsigned int samplerate = jack.getSamplerate();
+  std::cout << "int is " << sizeof(int) << std::endl;
   synth.setSamplerate(samplerate);
   std::cout << "(main) Connected to Jack" << std::endl;
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
   // Initiaze DSP stuff now that we now the samplerate of Jack
   synth.noteOn(30);
-  synth.setGain(0.5);
+  synth.setGain(0.2);
 
   // Ask Jack to connect our audio output to the system output
   jack.autoConnect();
@@ -45,15 +45,14 @@ int main(int argc, char *argv[])
         break;
       case 'n':
         synth.noteOn(30 + (rand() % 36));
-        // break;
+        break;
       case 'p':
-        // synth.fmIndex = rand() % 5000;
+        synth.fmIndex = rand() % 10000;
         synth.modRatio = rand() % 32;
-        synth.carRatio = rand() % 32;
+        synth.carRatio = rand() % 8;
         std::cout << "(main) Randomized note. fmIndex: " << synth.fmIndex << " modulator ratio: " << synth.modRatio << " carrier ratio: " << synth.carRatio << std::endl;
         synth.setFrequency();
         break;
-
     }
   }
 

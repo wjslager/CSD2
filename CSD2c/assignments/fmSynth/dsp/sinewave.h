@@ -8,6 +8,7 @@ class SineWave : public Oscillator
 public:
   SineWave();
   ~SineWave();
+  void tick();
   double getSample();
 };
 

@@ -5,7 +5,7 @@
 Oscillator::Oscillator()
 {
   phase = 0;
-  tickInc = 0;
+  phaseInc = 0;
   // std::cout << "Oscillator constructor" << std::endl;
 }
 
@@ -36,8 +36,8 @@ void Oscillator::setFrequency(float hz, int sampleRate)
   */
 
   frequency = hz;
-  tickInc = PI_2 / ((1 / hz) * sampleRate);
-  // std::cout << "(osc) Frequency set to " << hz << "hz @ " << sampleRate << ". Tick set to " << tickInc << std::endl;
+  phaseInc = PI_2 / ((1 / hz) * sampleRate);
+  // std::cout << "(osc) Frequency set to " << hz << "hz @ " << sampleRate << ". Tick set to " << phaseInc << std::endl;
 }
 
 void Oscillator::tick()
@@ -45,5 +45,5 @@ void Oscillator::tick()
   // fmod is % for floats and doubles
   // wraps the phase around at twoPi to make sure the squarewave works
   // for more than one cycle
-  phase = fmod((phase + tickInc), PI_2);
+  phase = fmod((phase + phaseInc), PI_2);
 }
