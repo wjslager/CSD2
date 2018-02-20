@@ -1,9 +1,6 @@
 #include <iostream>
-#include "synth.h"
 #include "fmsynth.h"
 #include "midi.h"
-#include "dsp/oscillator.h"
-#include "dsp/sinewave.h"
 
 FMSynth::FMSynth() : Synth()
 {
@@ -31,9 +28,18 @@ void FMSynth::setFrequency(float frequency)
 void FMSynth::noteOn(float midi)
 {
   std::cout << "(fmsynth) noteOn: " << midi << std::endl;
+  // Store the frequency and pass it to the oscillators
   frequency = mtof(midi);
   setFrequency(frequency);
-  // trigger envelopes here
+
+  // Trigger all envelopes
+  carEnv.noteOn();
+  modEnv.noteOn();
+}
+
+void FMSynth::noteOff()
+{
+
 }
 
 void FMSynth::process(float *sampleBuf, int frames)
@@ -41,10 +47,12 @@ void FMSynth::process(float *sampleBuf, int frames)
   for (int i=0; i<frames; i++)
   {
     // (base frequency * carrier ratio) + (modulator * fmIndex)
-    car->setFrequency((frequency * carRatio) + (mod->getSample() * fmIndex), samplerate);
-    sampleBuf[i] = car->getSample() * gain;
+    car->setFrequency((frequency * carRatio) + (mod->getSample() * fmIndex * modEnv.getSample()), samplerate);
+    sampleBuf[i] = car->getSample() * gain * carEnv.getSample();
 
     mod->tick();
     car->tick();
+    carEnv.tick();
+    modEnv.tick();
   }
 }

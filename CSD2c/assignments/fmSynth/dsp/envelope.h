@@ -9,6 +9,8 @@ public:
   void tick();
   void line(float start, float end, float frames);
   double getSample();
+  virtual void noteOn() = 0;
+  virtual void noteOff() = 0;
 protected:
   double value;
 private:

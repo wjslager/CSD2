@@ -5,6 +5,7 @@ class Synth
 {
 public:
   Synth();
+  Synth(float samplerate);
   ~Synth();
   void setGain(float gain);
   void setSamplerate(float samplerate);

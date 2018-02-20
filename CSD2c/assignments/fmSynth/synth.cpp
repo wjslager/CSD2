@@ -6,6 +6,12 @@ Synth::Synth()
   // std::cout << "Synth constructor" << std::endl;
 }
 
+Synth::Synth(float samplerate)
+{
+  // std::cout << "Synth constructor with samplerate" << std::endl;
+  setSamplerate(samplerate);
+}
+
 Synth::~Synth()
 {
   // std::cout << "Synth deconstructor" << std::endl;

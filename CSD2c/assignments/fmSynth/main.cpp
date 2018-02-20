@@ -11,12 +11,17 @@ int main(int argc, char *argv[])
   JackModule jack;
   FMSynth synth;
 
-  // Init Jack and retrieve the samplerate from the server
+  // Init Jack, exit the program if jack.init returns 1
   if (jack.init("C++ project") == 1) return 1;
-  unsigned int samplerate = jack.getSamplerate();
-  std::cout << "int is " << sizeof(int) << std::endl;
-  synth.setSamplerate(samplerate);
   std::cout << "(main) Connected to Jack" << std::endl;
+
+  // Retrieve the samplerate and pass it to all generators
+  long unsigned int samplerate = jack.getSamplerate();
+  synth.setSamplerate(samplerate);
+
+  // Test stuff
+  synth.noteOn(30);
+  synth.setGain(0.2);
 
   // DSP process definition
   jack.onProcess = [&synth](jack_default_audio_sample_t *inBuf, jack_default_audio_sample_t *outBuf, jack_nframes_t nframes, double samplerate)
@@ -25,12 +30,9 @@ int main(int argc, char *argv[])
     return 0;
   };
 
-  // Initiaze DSP stuff now that we now the samplerate of Jack
-  synth.noteOn(30);
-  synth.setGain(0.2);
-
   // Ask Jack to connect our audio output to the system output
   jack.autoConnect();
+  // All set, let's go!
 
   // Wait for commanline output while Jack renders our audio
   std::cout << "\nControls:\n'q' to quit\n'n' to randomize note and parameters\n'p' to randomize parameters" << std::endl;

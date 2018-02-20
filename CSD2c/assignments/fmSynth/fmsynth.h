@@ -2,6 +2,7 @@
 #define _FMSYNTH_H_
 
 #include "dsp/sinewave.h"
+#include "dsp/adsr.h"
 #include "synth.h"
 
 class FMSynth : public Synth
@@ -12,6 +13,7 @@ public:
   void setFrequency();
   void setFrequency(float frequency);
   void noteOn(float midi);
+  void noteOff();
   void process(float *sampleBuf, int frames);
 
   /* Modifying the synthesizer parameters:
@@ -30,6 +32,9 @@ private:
   SineWave sine1;
   Oscillator* mod;
   SineWave sine2;
+
+  ADSR carEnv;
+  ADSR modEnv;
 };
 
 #endif
