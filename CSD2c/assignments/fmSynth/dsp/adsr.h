@@ -11,13 +11,16 @@ public:
   void noteOn();
   void noteOff();
   double getSample();
+protected:
+  // Automatable values
+  float curve = 2;
+  float attack = 240;
+  float decay = 96000;
+  float sustain = 0.5;
+  float release = 24000;
 private:
-  bool note = false;
-  int stage = 0; // tracks which envelope segment we are in
-  float attack = 4800;
-  float decay = 48000;
-  float sustain = 0.1;
-  float release = 480;
+  float preAttack = 32;
+  int stage = 0;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "adsr.h"
 
 ADSR::ADSR()
@@ -22,7 +23,7 @@ void ADSR::noteOff()
 {
   // Skip to the release stage
   phase = 1;
-  stage = 3;
+  stage = 4;
   // std::cout << "(adsr) note off" << std::endl;
 }
 
@@ -32,24 +33,32 @@ double ADSR::getSample()
     // phase >= 1 when a line ends
     switch(stage) {
       case 0:
-        // ATTACK stage
-        line(0, 1, attack);
+        // pre attack which slides from the current value to 0
+        // used to ensure the envelope can retrigger without clicks
+        line(value, 0, preAttack);
         stage++;
         break;
       case 1:
-        // DECAY stage
-        line(1, sustain, decay);
+        // === ATTACK
+        line(0, 1, attack);
         stage++;
         break;
       case 2:
-        // SUSTAIN STAGE
+        // === DECAY
+        line(1, sustain, decay);
+        stage++;
         break;
       case 3:
-        // RELEASE stage
+        // ==== SUSTAIN
+        // value will be left at 'sustain'
+        // the next stage will be triggered by noteOff()
+        break;
+      case 4:
+        // === RELEASE
         line(value, 0, release);
         stage++;
         break;
     }
   }
-  return value;
+  return pow(value, curve);
 }
