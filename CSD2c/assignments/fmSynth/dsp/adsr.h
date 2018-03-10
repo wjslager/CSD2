@@ -12,14 +12,16 @@ public:
   void noteOff();
   double getSample();
 protected:
-  // Automatable values
+  // the sample is raised to the power of the curve value
+  // output = sample ^ curve
   float curve = 2;
+  // time in samples
   float attack = 240;
   float decay = 96000;
-  float sustain = 0.5;
   float release = 24000;
+  // volume in gain factor
+  float sustain = 0.5;
 private:
-  float preAttack = 32;
   int stage = 0;
 };
 

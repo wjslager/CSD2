@@ -21,7 +21,7 @@ void ADSR::noteOn()
 
 void ADSR::noteOff()
 {
-  // Skip to the release stage
+  // Immediately go to the release stage
   phase = 1;
   stage = 4;
   // std::cout << "(adsr) note off" << std::endl;
@@ -29,32 +29,35 @@ void ADSR::noteOff()
 
 double ADSR::getSample()
 {
-  if (phase >= 1) {
-    // phase >= 1 when a line ends
-    switch(stage) {
+  // phase >= 1 is true when a line ends
+  // thus the switch statement will only be evaluated at that point
+  if (phase >= 1)
+  {
+    switch(stage)
+    {
       case 0:
         // pre attack which slides from the current value to 0
-        // used to ensure the envelope can retrigger without clicks
-        line(value, 0, preAttack);
+        // used to ensure the envelope can retrigger while active without clicks
+        line(value, 0, 32);
         stage++;
         break;
       case 1:
-        // === ATTACK
+        /* === ATTACK === */
         line(0, 1, attack);
         stage++;
         break;
       case 2:
-        // === DECAY
+        /* === DECAY === */
         line(1, sustain, decay);
         stage++;
         break;
       case 3:
-        // ==== SUSTAIN
-        // value will be left at 'sustain'
-        // the next stage will be triggered by noteOff()
+        /* ==== SUSTAIN === */
+        // nothing happens when we reach 'sustain'
+        // as it can only be ended by noteOff()
         break;
       case 4:
-        // === RELEASE
+        /* === RELEASE === */
         line(value, 0, release);
         stage++;
         break;
