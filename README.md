@@ -8,4 +8,6 @@ Intro to Python
 Intro to (bash) shell scripting and C++
 
 ## CSD2c
-Building a standalone synthesizers with Jack2 audio output to be ran on a Raspberry Pi
+- Building a standalone synthesizers with Jack2.
+- Building an audio effect to be ran on a Raspberry Pi
+- Maker skills: running Puredata/C++ audio projects on the Raspberry Pi Zero.
