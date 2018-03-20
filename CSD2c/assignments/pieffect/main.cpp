@@ -53,23 +53,25 @@ static void audio()
 
     for (unsigned int n = 0; n < buffersize; n++)
     {
-      outbuffer[n] = inbuffer[n] * 0.1;
+      outbuffer[n] = inbuffer[n];
     }
 
     jack.writeSamples(outbuffer, buffersize);
   }
-}
+} // audio()
 
-// ===== ===== ===== ===== ===== main() ===== ===== ===== ===== ===== //
+// ===== ===== ===== ===== ===== main ===== ===== ===== ===== ===== //
 
 int main(int argc, char **argv)
 {
-  // Start Jack and retrieve the samplerate
+  // Start Jack and store the samplerate
   jack.init("pieffect");
-  jack.autoConnect();
   samplerate = jack.getSamplerate();
 
   std::cerr << "\nSamplerate\t" << samplerate << "\nBuffer size\t" << buffersize << std::endl;
+
+  // Only connect an output
+  jack.autoConnect(false, true);
 
   // Start the DSP thread
   std::thread dspThread(audio);
@@ -86,11 +88,11 @@ int main(int argc, char **argv)
     else {
       std::cerr << "Command not recognized: " << input << std::endl;
     }
-  }
+  } // while(true)
 
   dspThread.join();
 
   // Disconnect Jack and end the program
   jack.end();
   return 0;
-}
+} // main()

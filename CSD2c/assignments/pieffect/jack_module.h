@@ -44,7 +44,7 @@ public:
   int init();
   int init(std::string clientName);
   unsigned long getSamplerate();
-  void autoConnect();
+  void autoConnect(bool, bool);
   unsigned long readSamples(float *,unsigned long);
   unsigned long writeSamples(float *,unsigned long);
   void end();

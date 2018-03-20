@@ -143,7 +143,7 @@ unsigned long JackModule::getSamplerate()
 } // getSamplerate()
 
 
-void JackModule::autoConnect()
+void JackModule::autoConnect(bool connectInput, bool connectOutput)
 {
   /*
    * Try auto-connect our output
@@ -156,14 +156,18 @@ void JackModule::autoConnect()
     exit(1);
   }
 
-  if(jack_connect(client,jack_port_name(output_port),ports[0]))
-  {
-    std::cout << "Cannot connect output ports" << std::endl;
-  }
+  if(connectOutput) {
+    if(jack_connect(client,jack_port_name(output_port),ports[0]))
+    {
+      std::cout << "Cannot connect output ports" << std::endl;
+    }
 
-  if(jack_connect(client,jack_port_name(output_port),ports[1]))
-  {
-    std::cout << "Cannot connect output ports" << std::endl;
+    if(jack_connect(client,jack_port_name(output_port),ports[1]))
+    {
+      std::cout << "Cannot connect output ports" << std::endl;
+    }
+
+    std::cout << "Automatically connected output" << std::endl;
   }
 
   free(ports); // ports structure no longer needed
@@ -178,9 +182,12 @@ void JackModule::autoConnect()
     exit(1);
   }
 
-  if(jack_connect(client,ports[0],jack_port_name(input_port)))
-  {
-    std::cout << "Cannot connect input ports" << std::endl;
+  if(connectInput) {
+    if(jack_connect(client,ports[0],jack_port_name(input_port)))
+    {
+      std::cout << "Cannot connect input ports" << std::endl;
+    }
+    std::cout << "Automatically connected input" << std::endl;
   }
 
 
