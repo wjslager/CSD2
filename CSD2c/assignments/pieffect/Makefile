@@ -7,8 +7,8 @@ JACKMOD = jack_module.o ringbuffer.o
 
 all: $(PG)
 
-$(PG): $(JACKMOD) main.o
-	$(CC) -o $@ $(CFLAGS) $(JACKMOD) main.o $(LDFLAGS)
+$(PG): $(JACKMOD) main.o dsp/sampledelay.o wmath.o
+	$(CC) -o $@ $(CFLAGS) $(JACKMOD) main.o sampledelay.o wmath.o $(LDFLAGS)
 
 .cpp.o:
 	$(CC) -c $< $(CFLAGS)
