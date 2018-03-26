@@ -1,7 +1,6 @@
 # pi zero audio project
 
 The goal is to be able to run puredata patches on the pi zero w. An extra goal would be to run my own C++ programs which use Jack.
-- [Log](#log)
 
 ## Log
 
@@ -66,17 +65,26 @@ defaults.pcm.card 0
 ```
 sudo nano ~/.asoundrc
 ```
-- Add the following lines separated by a blank line:
+- Add the following lines:
 ```
 pcm.!default {
     type hw
     card 1
 }
-```
-```
 ctl.!default {
     type hw
     card 1
 }
 ```
-- This should do it.
+- When you reboot the pi with a sound card connected, it should default to using that card.
+
+#### Testing audio
+- As test we can play some audio using ALSA's *speaker-test* utility. We will play a sinewave at 440hz over 2 channels.
+```
+speaker-test -c 2 -t sine -f 440
+```
+- Because I do not have a USB hub and thus I can't connect both my pc and the soundcard, I will let the pi execute this command on boot. Because *rc.local* is executed as root, we will have to include the complete path.
+- Therefore put the following in */etc/rc.local*
+```
+/usr/bin/speaker-test -c 2 -t sine -f 440
+```
