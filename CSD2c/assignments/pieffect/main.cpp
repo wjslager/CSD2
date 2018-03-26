@@ -34,6 +34,8 @@
 #include <thread>
 #include "jack_module.h"
 #include "dsp/sampledelay.h"
+#include "dsp/oscillator.h"
+#include "dsp/sinewave.h"
 #include "wmath.h"
 
 JackModule jack;
@@ -44,7 +46,10 @@ unsigned long buffersize = 128;
 
 static void audio()
 {
-  SampleDelay testboyo(96000);
+  SampleDelay allpass(96000);
+  SampleDelay delay1(96000);
+  SineWave chorus;
+  chorus.setFrequency(0.5, samplerate);
   float *inbuffer = new float[buffersize];
   float *outbuffer = new float[buffersize];
 
@@ -56,10 +61,11 @@ static void audio()
 
     for (unsigned int n = 0; n < buffersize; n++)
     {
-      outbuffer[n] = inbuffer[n] + testboyo.read(10000);
-      testboyo.write(outbuffer[n] * 0.8);
+      outbuffer[n] = inbuffer[n] + delay1.read(28000 + (200 * chorus.getSample())) + allpass.read(2700);
+      allpass.write(outbuffer[n] * 0.1);
+      delay1.write(outbuffer[n] * 0.6);
 
-      testboyo.tick();
+      chorus.tick();
     }
 
     jack.writeSamples(outbuffer, buffersize);
@@ -70,7 +76,6 @@ static void audio()
 
 int main(int argc, char **argv)
 {
-  std::cout << posModulo(-2, 7) << std::endl;
   // Start Jack and store the samplerate
   jack.init("pieffect");
   samplerate = jack.getSamplerate();

@@ -5,10 +5,13 @@ PG = example
 
 JACKMOD = jack_module.o ringbuffer.o
 
+DSPREQ = dsp/sampledelay.o dsp/oscillator.o dsp/sinewave.o
+DSP = sampledelay.o oscillator.o sinewave.o
+
 all: $(PG)
 
-$(PG): $(JACKMOD) main.o dsp/sampledelay.o wmath.o
-	$(CC) -o $@ $(CFLAGS) $(JACKMOD) main.o sampledelay.o wmath.o $(LDFLAGS)
+$(PG): $(JACKMOD) main.o wmath.o $(DSPREQ)
+	$(CC) -o $@ $(CFLAGS) $(JACKMOD) main.o wmath.o $(DSP) $(LDFLAGS)
 
 .cpp.o:
 	$(CC) -c $< $(CFLAGS)

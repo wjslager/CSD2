@@ -22,6 +22,7 @@ SampleDelay::~SampleDelay()
 void SampleDelay::write(double sample)
 {
   buffer[writeIndex] = sample;
+  tick();
 }
 
 double SampleDelay::read(unsigned long offset)
