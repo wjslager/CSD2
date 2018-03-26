@@ -32,7 +32,8 @@ Make sure that there are no unnecessary spaces or other characters.
 
 #### Connecting over ssh
 - Now put the SD card into your pi and connect the pi to your pc using USB.
-- I had to change IPv4 addresses mode to Link-Local only in order to be able to ssh into the pi. You might be able to skip this step.
+  - *Be sure to connect it to the micro USB port marked as USB, the other USB port only transmits power.*
+  - *I had to change IPv4 addresses mode to Link-Local only in order to be able to ssh into the pi. You might be able to skip this step. See [this](https://raspberrypi.stackexchange.com/questions/66143/usb-otg-w-raspberry-pi-zero/74499) article for more info*
 - Connect over SSH:
 ```
 ssh pi@raspberrypi.local
