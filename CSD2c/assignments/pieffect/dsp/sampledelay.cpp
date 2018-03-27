@@ -1,5 +1,5 @@
 #include "sampledelay.h"
-#include "../wmath.h" // provides a mathematically correct modulo
+#include "../utilities.h" // provides a mathematically correct modulo
 
 SampleDelay::SampleDelay(unsigned long delayLength)
 {
@@ -22,16 +22,12 @@ SampleDelay::~SampleDelay()
 void SampleDelay::write(double sample)
 {
   buffer[writeIndex] = sample;
-  tick();
+
+  writeIndex++;
+  writeIndex = posModulo(writeIndex, delayLength);
 }
 
 double SampleDelay::read(unsigned long offset)
 {
   return buffer[posModulo((writeIndex - offset), delayLength)];
-}
-
-void SampleDelay::tick()
-{
-  writeIndex++;
-  writeIndex = posModulo(writeIndex, delayLength);
 }

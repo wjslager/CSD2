@@ -1,5 +1,5 @@
-#ifndef _WMATH_H_
-#define _WMATH_H_
+#ifndef _UTILITIES_H_
+#define _UTILITIES_H_
 
 long posModulo(long value, long mod);
 

@@ -36,7 +36,7 @@
 #include "dsp/sampledelay.h"
 #include "dsp/oscillator.h"
 #include "dsp/sinewave.h"
-#include "wmath.h"
+#include "utilities.h"
 
 JackModule jack;
 unsigned long samplerate = 48000; // default, overwritten by Jack server
@@ -46,10 +46,10 @@ unsigned long buffersize = 128;
 
 static void audio()
 {
-  SampleDelay allpass(96000);
+  SampleDelay diffusor(96000);
   SampleDelay delay1(96000);
-  SineWave chorus;
-  chorus.setFrequency(0.5, samplerate);
+  SineWave LFO1;
+  LFO1.setFrequency(0.5, samplerate);
   float *inbuffer = new float[buffersize];
   float *outbuffer = new float[buffersize];
 
@@ -61,11 +61,15 @@ static void audio()
 
     for (unsigned int n = 0; n < buffersize; n++)
     {
-      outbuffer[n] = inbuffer[n] + delay1.read(28000 + (200 * chorus.getSample())) + allpass.read(2700);
-      allpass.write(outbuffer[n] * 0.1);
+      // Output = input + lfo delay + diffusor delay
+      outbuffer[n] = inbuffer[n] + delay1.read(28000 + (200 * LFO1.getSample())) + diffusor.read(2700);
+
+      // Feed the output back into the delay lines
+      diffusor.write(outbuffer[n] * 0.1);
       delay1.write(outbuffer[n] * 0.6);
 
-      chorus.tick();
+      // Tick stuff
+      LFO1.tick();
     }
 
     jack.writeSamples(outbuffer, buffersize);
@@ -83,6 +87,7 @@ int main(int argc, char **argv)
   std::cerr << "\nSamplerate\t" << samplerate << "\nBuffer size\t" << buffersize << std::endl;
 
   // Only connect an output
+  // autoConnect(input = false, output = true)
   jack.autoConnect(false, true);
 
   // Start the DSP thread
