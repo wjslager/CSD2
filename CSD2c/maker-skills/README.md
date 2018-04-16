@@ -1,8 +1,10 @@
 # pi zero audio project
 
-The goal is to be able to run puredata patches on the pi zero w. An extra goal would be to run my own C++ programs which use Jack.
+*2018, Ward Slager*
 
-## Log
+The goal is to use USB class-compliant soundcards as the pi zero has no audio ouputs.
+
+<!-- ## Log -->
 
 #### Preparing the SD card for USB OTG
 - Download the newest version of [raspbian](https://www.raspberrypi.org/downloads/raspbian/) (stretch desktop in my case)
