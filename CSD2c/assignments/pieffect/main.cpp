@@ -46,8 +46,8 @@ unsigned long buffersize = 128;
 
 static void audio()
 {
-  SampleDelay diffusor(96000);
-  SampleDelay delay1(96000);
+  SampleDelay diffusor(5000);
+  SampleDelay delay1(48000);
   SineWave LFO1;
   LFO1.setFrequency(0.5, samplerate);
   float *inbuffer = new float[buffersize];
@@ -62,14 +62,18 @@ static void audio()
     for (unsigned int n = 0; n < buffersize; n++)
     {
       // Output = input + lfo delay + diffusor delay
-      outbuffer[n] = inbuffer[n] + delay1.read(28000 + (200 * LFO1.getSample())) + diffusor.read(2700);
+      outbuffer[n] = inbuffer[n] + delay1.read(30000 + (200 * LFO1.getSample())) + diffusor.read(2700);
 
       // Feed the output back into the delay lines
       diffusor.write(outbuffer[n] * 0.1);
-      delay1.write(outbuffer[n] * 0.6);
+      delay1.write(outbuffer[n] * 0.75);
 
       // Tick stuff
       LFO1.tick();
+
+      if (outbuffer[n] > 1 || outbuffer[n] < -1) {
+        std::cerr << "ooh nee" << std::endl;
+      }
     }
 
     jack.writeSamples(outbuffer, buffersize);
@@ -84,7 +88,7 @@ int main(int argc, char **argv)
   jack.init("pieffect");
   samplerate = jack.getSamplerate();
 
-  std::cerr << "\nSamplerate\t" << samplerate << "\nBuffer size\t" << buffersize << std::endl;
+  std::cerr << "\nSamplerate\t\t" << samplerate << "\nInternal buffer size\t" << buffersize << "\n" << std::endl;
 
   // Only connect an output
   // autoConnect(input = false, output = true)
