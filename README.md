@@ -11,3 +11,6 @@ Intro to (bash) shell scripting and C++
 - Building a standalone synthesizers with Jack2.
 - Building an audio effect to be ran on a Raspberry Pi
 - Maker skills: running Puredata/C++ audio projects on the Raspberry Pi Zero.
+
+## CSD2d
+*See [faketape](https://github.com/wjslager/faketape)*
